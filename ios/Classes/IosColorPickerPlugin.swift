@@ -17,21 +17,27 @@ public class IosColorPickerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "pickColor":
-            if let args = call.arguments as? [String: Any],
-               let defaultColor = args["defaultColor"] as? [String: CGFloat] {
-                self.pickColor(defaultColor: defaultColor, result: result)
+            if let args = call.arguments as? [String: Any]
+                {
+                let defaultColor = args["defaultColor"] as? [String: CGFloat]
+                let darkMode = args["darkMode"] as? Bool ?? false
+                self.pickColor(defaultColor: defaultColor, darkMode: darkMode ,result: result)
             } else {
-                self.pickColor(defaultColor: nil, result: result)
+                self.pickColor(defaultColor: nil, darkMode: false, result: result)
             }
         default:
             result(FlutterMethodNotImplemented)
         }
     }
 
-    private func pickColor(defaultColor: [String: CGFloat]?, result: @escaping FlutterResult) {
+    private func pickColor(defaultColor: [String: CGFloat]?, darkMode: Bool, result: @escaping FlutterResult) {
         let colorPicker = UIColorPickerViewController()
         colorPicker.selectedColor = defaultColor?.toUIColor() ?? .red
         colorPicker.modalPresentationStyle = .popover
+        if darkMode {
+                UIApplication.shared.delegate?.window??.overrideUserInterfaceStyle = .dark
+
+        }
 
         colorPicker.delegate = self
 
@@ -39,7 +45,7 @@ public class IosColorPickerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
             rootViewController.present(colorPicker, animated: true, completion: nil)
         }
 
-        result(nil) // Method call ends here, stream handles further updates
+        result(nil)
     }
 
     // MARK: - FlutterStreamHandler
@@ -59,43 +65,17 @@ public class IosColorPickerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
 
 extension IosColorPickerPlugin: UIColorPickerViewControllerDelegate {
     public func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor) {
-        // Stream color updates to Flutter
        if let rgba = viewController.selectedColor.toRGBA(), let eventSink = self.eventSink {
            eventSink(rgba)
        }
     }
 
        public func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
-           // Stream color updates to Flutter
                 if let rgba = viewController.selectedColor.toRGBA(), let eventSink = self.eventSink {
                     eventSink(rgba)
                 }
             }
 }
-
-//    public func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-//       if let rgba = viewController.selectedColor.toRGBA(), let eventSink = self.eventSink {
-//                 print("Sending color to Flutter: \(rgba)")
-//                 eventSink(rgba)
-//             }
-//        else if let eventSink = self.eventSink {
-//            eventSink(FlutterError(code: "CLOSED", message: "Color picker closed", details: nil))
-//        }
-//    }
-//
-//
-//    public func colorPickerViewControllerDidCancel(_ viewController: UIColorPickerViewController) {
-//        // Notify that the picker is canceled
-//          if let rgba = viewController.selectedColor.toRGBA(), let eventSink = self.eventSink {
-//                        print("Sending color to Flutter: \(rgba)")
-//                        eventSink(rgba)
-//                    }
-//               else if let eventSink = self.eventSink {
-//            eventSink(FlutterError(code: "CANCELLED", message: "Color picker cancelled", details: nil))
-//        }
-//    }
-
-
 
 extension UIColor {
     func toRGBA() -> [String: CGFloat]? {

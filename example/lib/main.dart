@@ -7,8 +7,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,15 +16,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'iOS Color Picker'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -54,12 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: () {
                 iosColorPickerController.showNativeIosColorPicker(
-                    startingColor: backgroundColor,
-                    onColorChanged: (color) {
-                      setState(() {
-                        backgroundColor = color;
-                      });
-                    });
+                  darkMode: true,
+                  startingColor: backgroundColor,
+                  onColorChanged: (color) {
+                    setState(() => backgroundColor = color);
+                  },
+                );
               },
               child: Text("Native iOS"),
             ),
@@ -69,13 +65,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: () {
                 iosColorPickerController.showIOSCustomColorPicker(
-                    startingColor: backgroundColor,
-                    onColorChanged: (color) {
-                      setState(() {
-                        backgroundColor = color;
-                      });
-                    },
-                    context: context);
+                  context: context,
+                  startingColor: backgroundColor,
+                  onColorChanged: (color) {
+                    setState(() => backgroundColor = color);
+                  },
+                );
               },
               child: Text("Custom iOS for all"),
             ),

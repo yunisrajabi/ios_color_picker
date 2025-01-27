@@ -23,11 +23,7 @@ abstract class IosColorPickerPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<Color?> getPlatformColor(Map<String, double>? defaultColor) {
-    throw UnimplementedError('getPlatformColor() has not been implemented.');
-  }
-
-  Future<Stream> getPlatformColorStream() {
+  Future<Color?> getPlatformColor(Map<String, double>? defaultColor, bool? darkMode) {
     throw UnimplementedError('getPlatformColor() has not been implemented.');
   }
 }

@@ -20,10 +20,14 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
 
   @override
   void initState() {
-    var value = CacheHelper().getData(key: "selector_index");
-    if (value is int) {
-      typeIndex = value;
-    }
+    (CacheHelper().getData(key: "selector_index") as Future<dynamic>)
+        .then((onValue) {
+      if (onValue != null && onValue is int) {
+        setState(() {
+          typeIndex = onValue;
+        });
+      }
+    });
 
     super.initState();
   }

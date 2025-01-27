@@ -21,18 +21,10 @@ class IosColorPicker extends StatefulWidget {
 }
 
 class _IosColorPickerState extends State<IosColorPicker> {
-  ColorController colorController = ColorController(Colors.red);
-
   @override
   void initState() {
     CacheHelper.init();
     super.initState();
-  }
-
-  @override
-  void deactivate() {
-    // widget.onColorSelected(colorController.value);
-    super.deactivate();
   }
 
   @override
@@ -52,8 +44,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
         Container(
           width: maxWidth(context),
           height: 340 + componentsHeight(context),
-          decoration: const BoxDecoration(
-            color: backgroundColor,
+          decoration: BoxDecoration(
+            color: backgroundColor.withValues(alpha: 0.98),
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(10),
               topLeft: Radius.circular(10),
