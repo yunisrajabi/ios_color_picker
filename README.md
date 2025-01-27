@@ -13,74 +13,69 @@ and the Flutter guide for
 ## Description
 A new Flutter package that provides native iOS Color Picker cloned UI for all platforms
 
-# This package supports all platforms listed below.
+## Supported Platforms
 
-### **platforms:**
-
-* linux
-* macos
-* web
-* windows
-* iOS
-* Android
-
+- Linux
+- macOS
+- Web
+- Windows
+- iOS
+- Android
 
 ## Features
+
+### Screenshots & Demo
+
 <img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504135/color_picker/1_v2nk8m.png" width="300">
-
-
-
+<br/>
 <img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504183/color_picker/1_p91sih.gif" width="300">
 <img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504147/color_picker/2_sp5wvu.png" width="300">
 <img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504212/color_picker/3_zkbdzu.gif" width="300">
 
+## Getting Started
 
-[//]: # (## Getting started)
-
-
-[//]: # (start using the package.)
+This package is easy to integrate into your Flutter application. See the usage section below to get started.
 
 ## Usage
 
-
-[//]: # (to `/example` folder.)
-
 ```dart
-///Native iOS 
-ElevatedButton(onPressed: () {
-iosColorPickerController.showNativeIosColorPicker(
-startingColor: backgroundColor,
-onColorChanged: (color) {
-setState(() {
-backgroundColor = color;
-});
-});
-},
-child: Text("Native iOS"),
+/// Native iOS Color Picker
+ElevatedButton(
+  onPressed: () {
+    iosColorPickerController.showNativeIosColorPicker(
+      startingColor: backgroundColor,
+      onColorChanged: (color) {
+        setState(() {
+          backgroundColor = color;
+        });
+      },
+    );
+  },
+  child: Text("Native iOS"),
 ),
 
-///Custom iOS for all
+/// Custom iOS Color Picker (for all platforms)
 ElevatedButton(
-onPressed: () {
-iosColorPickerController.showIOSCustomColorPicker(
-startingColor: backgroundColor,
-onColorChanged: (color) {
-setState(() {
-backgroundColor = color;
-});
-},
-context: context);
-},
-child: Text("Custom iOS for all"),
+  onPressed: () {
+    iosColorPickerController.showIOSCustomColorPicker(
+      startingColor: backgroundColor,
+      onColorChanged: (color) {
+        setState(() {
+          backgroundColor = color;
+        });
+      },
+      context: context,
+    );
+  },
+  child: Text("Custom iOS for all"),
 ),
 ```
+🧪 Example
 
-## 🧪 Example
+Run the app in the example/ folder to explore the plugin.
 
-Please run the app in the [`example/`](https://github.com/mokhselim/ios_color_picker/tree/main/example) folder to start playing!
+Additional Information
 
-## Additional information
-<a href="https://www.linkedin.com/in/mo-kh-selim/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/LinkedIn_icon.svg/144px-LinkedIn_icon.svg.png" width="32" /></a>
+For more updates and inquiries, connect with me on LinkedIn:
 
-
-# ios_color_picker
+<a href="https://www.linkedin.com/in/mo-kh-selim/"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/LinkedIn_icon.svg/144px-LinkedIn_icon.svg.png" width="32" /> </a> ```
