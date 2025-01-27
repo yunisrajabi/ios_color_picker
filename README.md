@@ -46,26 +46,33 @@ A new Flutter package that provides native iOS Color Picker cloned UI for all pl
 [//]: # (to `/example` folder.)
 
 ```dart
-
-ElevatedButton(
-onPressed: () {
-showModalBottomSheet(
-backgroundColor: Colors.transparent,
-barrierColor: Colors.transparent,
-isScrollControlled: true,
-context: context,
-  builder: (context) {
-        return IosColorPicker(
-        onColorSelected: (Color value) {
-          setState(() {
-            backgroundColor = value;
-          });
-          },);
-          });
-            },
-    child: Text("SelectColor"),
+///Native iOS 
+ElevatedButton(onPressed: () {
+iosColorPickerController.showNativeIosColorPicker(
+startingColor: backgroundColor,
+onColorChanged: (color) {
+setState(() {
+backgroundColor = color;
+});
+});
+},
+child: Text("Native iOS"),
 ),
 
+///Custom iOS for all
+ElevatedButton(
+onPressed: () {
+iosColorPickerController.showIOSCustomColorPicker(
+startingColor: backgroundColor,
+onColorChanged: (color) {
+setState(() {
+backgroundColor = color;
+});
+},
+context: context);
+},
+child: Text("Custom iOS for all"),
+),
 ```
 
 ## 🧪 Example

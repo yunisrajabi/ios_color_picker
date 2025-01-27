@@ -7,7 +7,7 @@ import 'custom_picker/ios_color_picker.dart';
 import 'custom_picker/extensions.dart';
 import 'native_picker/ios_color_picker_platform_interface.dart';
 
-class ShowIOSColorPicker {
+class IOSColorPickerController {
   Color selectedColor = Colors.green;
   static const _eventChannel = EventChannel('ios_color_picker_stream');
   StreamSubscription? _colorSubscription;
@@ -17,21 +17,19 @@ class ShowIOSColorPicker {
     required ValueChanged<Color> onColorChanged,
     Color? startingColor,
   }) async {
-    if (Platform.isIOS || Platform.isMacOS) {
-      selectedColor = startingColor ?? selectedColor;
+    assert(Platform.isIOS,
+        "Only works for iOS use (showIOSCustomColorPicker) for other platforms");
 
-      IosColorPickerPlatform.instance.getPlatformColor(selectedColor.toMap());
-      _colorSubscription =
-          _eventChannel.receiveBroadcastStream().listen((event) {
-        if (event != null) {
-          selectedColor = (event as Map<Object?, Object?>).toColor();
+    selectedColor = startingColor ?? selectedColor;
 
-          onColorChanged(selectedColor);
-        }
-      }, onError: (err) {});
-    } else {
-      throw "Platform is wrong";
-    }
+    IosColorPickerPlatform.instance.getPlatformColor(selectedColor.toMap());
+    _colorSubscription = _eventChannel.receiveBroadcastStream().listen((event) {
+      if (event != null) {
+        selectedColor = (event as Map<Object?, Object?>).toColor();
+
+        onColorChanged(selectedColor);
+      }
+    }, onError: (err) {});
   }
 
   void showIOSCustomColorPicker({
@@ -53,5 +51,18 @@ class ShowIOSColorPicker {
             },
           );
         });
+  }
+
+  /// Cancel the color subscription
+  void cancelColorSubscription() {
+    if (_colorSubscription != null) {
+      _colorSubscription!.cancel();
+      _colorSubscription = null;
+    }
+  }
+
+  /// Dispose resources
+  void dispose() {
+    cancelColorSubscription();
   }
 }

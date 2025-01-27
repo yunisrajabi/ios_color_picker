@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:flutter/services.dart';
-import 'package:ios_color_picker/custom_picker/ios_color_picker.dart';
-import 'package:ios_color_picker/custom_picker/pickers/area_picker.dart';
-import 'package:ios_color_picker/native_picker/ios_color_picker.dart';
 import 'package:ios_color_picker/show_ios_color_picker.dart';
 
 void main() {
@@ -17,13 +12,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'iOS Color Picker',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'iOS Color Picker'),
     );
   }
 }
@@ -39,19 +34,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Color backgroundColor = Colors.green;
+  IOSColorPickerController iosColorPickerController =
+      IOSColorPickerController();
+
+  @override
+  void dispose() {
+    iosColorPickerController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: ElevatedButton(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
               onPressed: () {
-                ShowIOSColorPicker().showNativeIosColorPicker(
-                    // context: context,
+                iosColorPickerController.showNativeIosColorPicker(
                     startingColor: backgroundColor,
                     onColorChanged: (color) {
                       setState(() {
@@ -59,10 +61,26 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
                     });
               },
-              child: Text("SelectColor"),
+              child: Text("Native iOS"),
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                iosColorPickerController.showIOSCustomColorPicker(
+                    startingColor: backgroundColor,
+                    onColorChanged: (color) {
+                      setState(() {
+                        backgroundColor = color;
+                      });
+                    },
+                    context: context);
+              },
+              child: Text("Custom iOS for all"),
+            ),
+          ],
+        ),
       ),
     );
   }
