@@ -11,7 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 ## Description
-A new Flutter package that provides native iOS Color Picker cloned UI for all platforms
+A new Flutter package that provides native iOS Color Picker cloned UI for all platforms, with iOS Native color Picker option for iOS only 
 
 ## Supported Platforms
 
@@ -70,6 +70,19 @@ ElevatedButton(
   child: Text("Custom iOS for all"),
 ),
 ```
+## You have to
+Dispose the controller because the streamer, check the example in example/ folder
+```dart
+  IOSColorPickerController iosColorPickerController =
+      IOSColorPickerController();
+
+  @override
+  void dispose() {
+    iosColorPickerController.dispose();
+    super.dispose();
+  }
+
+```
 🧪 Example
 
 Run the app in the example/ folder to explore the plugin.
@@ -78,4 +91,4 @@ Additional Information
 
 For more updates and inquiries, connect with me on LinkedIn:
 
-<a href="https://www.linkedin.com/in/mo-kh-selim/"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/LinkedIn_icon.svg/144px-LinkedIn_icon.svg.png" width="32" /> </a> ```
+<a href="https://www.linkedin.com/in/mo-kh-selim/"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/LinkedIn_icon.svg/144px-LinkedIn_icon.svg.png" width="32" /> </a>
