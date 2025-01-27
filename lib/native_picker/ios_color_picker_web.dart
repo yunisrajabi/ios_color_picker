@@ -4,7 +4,6 @@
 // ignore: avoid_web_libraries_in_flutter
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-import 'package:web/web.dart' as web;
 import 'ios_color_picker_platform_interface.dart';
 
 /// A web implementation of the IosColorPickerPlatform of the IosColorPicker plugin.
@@ -14,12 +13,5 @@ class IosColorPickerWeb extends IosColorPickerPlatform {
 
   static void registerWith(Registrar registrar) {
     IosColorPickerPlatform.instance = IosColorPickerWeb();
-  }
-
-  /// Returns a [String] containing the version of the platform.
-  @override
-  Future<String?> getPlatformVersion() async {
-    final version = web.window.navigator.userAgent;
-    return version;
   }
 }
