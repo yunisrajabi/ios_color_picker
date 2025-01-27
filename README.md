@@ -26,11 +26,12 @@ A new Flutter package that provides native iOS Color Picker cloned UI for all pl
 
 ### Screenshots & Demo
 
-<img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504135/color_picker/1_v2nk8m.png" width="300">
-<br/>
-<img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504183/color_picker/1_p91sih.gif" width="300">
-<img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504147/color_picker/2_sp5wvu.png" width="300">
-<img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504212/color_picker/3_zkbdzu.gif" width="300">
+<img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504135/color_picker/1_v2nk8m.png" width="200">
+<img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1738019029/color_picker/yghyiz53k80s9jeh4ska.gif" width="200">
+<img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504183/color_picker/1_p91sih.gif" width="200">
+<img src="https://res.cloudinary.com/dcvoshrrl/image/upload/v1737504212/color_picker/3_zkbdzu.gif" width="200">
+
+
 
 ## Getting Started
 
