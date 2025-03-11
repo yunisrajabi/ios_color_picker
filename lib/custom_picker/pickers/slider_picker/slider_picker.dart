@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ios_color_picker/custom_picker/extensions.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_helper.dart';
+
 import '../../shared.dart';
 import '../../utils.dart';
 
@@ -141,8 +142,8 @@ class _SlidePickerState extends State<SlidePicker> {
                     const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
                 child: Text(
                   trackType.toString().split('.').last.toUpperCase(),
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 13, color: Colors.white.withValues(alpha: 0.6)),
+                  // style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  //     fontSize: 13, color: Colors.white.withValues(alpha: 0.6)),
                 ),
               ),
               Expanded(
@@ -160,11 +161,11 @@ class _SlidePickerState extends State<SlidePicker> {
                           borderRadius: BorderRadius.all(Radius.circular(8))),
                       child: Text(
                         getColorParams(trackTypes.indexOf(trackType)),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: 16,
-                            letterSpacing: 0.6,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600),
+                        // style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        //     fontSize: 16,
+                        //     letterSpacing: 0.6,
+                        //     color: Colors.white,
+                        //     fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],
@@ -191,7 +192,7 @@ class _SlidePickerState extends State<SlidePicker> {
                 "Display P3 Hex Color #",
                 style: Theme.of(context)
                     .textTheme
-                    .titleMedium
+                    .titleSmall
                     ?.copyWith(color: const Color(0xff007AFF)),
               ),
               Container(
