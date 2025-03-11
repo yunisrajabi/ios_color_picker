@@ -1,8 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/shared.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:super_tooltip/super_tooltip.dart';
+
 import 'color_observer.dart';
 import 'extensions.dart';
 import 'helpers/cache_helper.dart';
@@ -87,8 +89,8 @@ class _HistoryColorsState extends State<HistoryColors> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 97,
-      width: maxWidth(context) - 120,
+      height: 90,
+      width: maxWidth(context) - 130,
       child: Column(
         children: [
           Expanded(
@@ -131,9 +133,11 @@ class _HistoryColorsState extends State<HistoryColors> {
                               shape: BoxShape.circle,
                               color: Colors.white.withValues(alpha: 0.16),
                             ),
-                            child: const Icon(
-                              Icons.add,
-                              color: Color(0xffB0B0BD),
+                            child: Center(
+                              child: const Icon(
+                                Icons.add,
+                                color: Color(0xffB0B0BD),
+                              ),
                             ),
                           ),
                         ),
@@ -171,10 +175,11 @@ class _HistoryColorsState extends State<HistoryColors> {
                               vertical: 8, horizontal: 12),
                           child: Text(
                             "Delete",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(color: Colors.red),
+                            style: GoogleFonts.anaheim().copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.red,
+                            ),
                           ),
                         ),
                       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/pickers/area_picker.dart';
 import 'package:ios_color_picker/custom_picker/pickers/grid_picker.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_picker.dart';
 import 'package:ios_color_picker/custom_picker/shared.dart';
+
 import 'color_observer.dart';
 import 'helpers/cache_helper.dart';
 
@@ -117,16 +119,24 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                           child: Center(
                             child: Text(
                               typeText[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                    fontWeight: typeIndex == index
-                                        ? FontWeight.w700
-                                        : FontWeight.w600,
-                                  ),
+                              style: GoogleFonts.anaheim().copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? Colors.black
+                                    : Colors.white,
+                              ),
+                              // style: Theme.of(context)
+                              //     .textTheme
+                              //     .bodyMedium
+                              //     ?.copyWith(
+                              //       color: Colors.white,
+                              //       fontSize: 13,
+                              //       fontWeight: typeIndex == index
+                              //           ? FontWeight.w700
+                              //           : FontWeight.w600,
+                              //),
                             ),
                           ),
                         ),

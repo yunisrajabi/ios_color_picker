@@ -55,18 +55,20 @@ class IOSColorPickerController {
     required BuildContext context,
     required ValueChanged<Color> onColorChanged,
     Color? startingColor,
-    TextStyle? textStyle,
-    Color? backgroundColor,
-    Color? barrierColor,
+    Color? color,
   }) async {
     colorController = ColorController(startingColor ?? selectedColor);
     return showModalBottomSheet(
-        backgroundColor: backgroundColor,
-        barrierColor: barrierColor,
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.black26,
         isScrollControlled: true,
         context: context,
         builder: (context) {
           return IosColorPicker(
+            color: color ?? Colors.white,
+            // color: Theme.of(context).brightness == Brightness.light
+            //     ? Colors.white
+            //     : Colors.black,
             onColorSelected: (value) {
               selectedColor = value;
               onColorChanged(selectedColor);

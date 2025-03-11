@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/extensions.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_helper.dart';
 
@@ -133,17 +134,22 @@ class _SlidePickerState extends State<SlidePicker> {
     List<SizedBox> sliders = [
       for (TrackType trackType in trackTypes)
         SizedBox(
-          height: 82,
+          height: 64,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
                 child: Text(
                   trackType.toString().split('.').last.toUpperCase(),
-                  // style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  //     fontSize: 13, color: Colors.white.withValues(alpha: 0.6)),
+                  style: GoogleFonts.anaheim().copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                  ),
                 ),
               ),
               Expanded(
@@ -152,8 +158,8 @@ class _SlidePickerState extends State<SlidePicker> {
                   children: [
                     Expanded(child: colorPickerSlider(trackType)),
                     Container(
-                      height: 36,
-                      width: 77,
+                      height: 30,
+                      width: 72,
                       margin: const EdgeInsets.only(left: 28),
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(
@@ -161,11 +167,13 @@ class _SlidePickerState extends State<SlidePicker> {
                           borderRadius: BorderRadius.all(Radius.circular(8))),
                       child: Text(
                         getColorParams(trackTypes.indexOf(trackType)),
-                        // style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        //     fontSize: 16,
-                        //     letterSpacing: 0.6,
-                        //     color: Colors.white,
-                        //     fontWeight: FontWeight.w600),
+                        style: GoogleFonts.anaheim().copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.black
+                              : Colors.white,
+                        ),
                       ),
                     ),
                   ],
@@ -184,19 +192,22 @@ class _SlidePickerState extends State<SlidePicker> {
         ...sliders,
         const SizedBox(height: 16.0),
         Align(
-          alignment: Alignment.centerRight,
+          alignment: Alignment.center,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "Display P3 Hex Color #",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall
-                    ?.copyWith(color: const Color(0xff007AFF)),
+                style: GoogleFonts.anaheim().copyWith(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.black
+                      : Colors.white,
+                ),
               ),
               Container(
-                height: 36,
+                height: 30,
                 width: 90,
                 margin: const EdgeInsets.only(left: 8),
                 alignment: Alignment.center,
@@ -208,11 +219,13 @@ class _SlidePickerState extends State<SlidePicker> {
                 ),
                 child: Text(
                   currentHsvColor.toColor().toHex(),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: 16,
-                      letterSpacing: 1,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
+                  style: GoogleFonts.anaheim().copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.black
+                        : Colors.white,
+                  ),
                 ),
               ),
             ],

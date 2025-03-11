@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_helper.dart';
 import 'package:ios_color_picker/custom_picker/pickers_selector_row.dart';
 import 'package:ios_color_picker/custom_picker/shared.dart';
+
 import 'color_observer.dart';
 import 'helpers/cache_helper.dart';
 import 'history_colors.dart';
@@ -11,10 +13,12 @@ class IosColorPicker extends StatefulWidget {
   const IosColorPicker({
     super.key,
     required this.onColorSelected,
+    required this.color,
   });
 
   ///returns the selected color
   final ValueChanged<Color> onColorSelected;
+  final Color color;
 
   @override
   State<IosColorPicker> createState() => _IosColorPickerState();
@@ -42,18 +46,24 @@ class _IosColorPickerState extends State<IosColorPicker> {
           ),
         ),
         Container(
-          width: maxWidth(context),
-          height: 340 + componentsHeight(context),
+          margin: EdgeInsets.all(20.0),
+          // width: maxWidth(context),
+          // height: 340 + componentsHeight(context),
           decoration: BoxDecoration(
-            color: backgroundColor.withValues(alpha: 0.98),
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(10),
-              topLeft: Radius.circular(10),
+            color: widget.color,
+            // color: Theme.of(context).brightness == Brightness.light
+            //     ? Colors.white
+            //     : Colors.black,
+            //backgroundColor.withValues(alpha: 0.98),
+            borderRadius: BorderRadius.all(
+              Radius.circular(20.0),
+              // topRight: Radius.circular(10),
+              // topLeft: Radius.circular(10),
             ),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(
@@ -71,23 +81,23 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     ),
                     Text(
                       'Colors',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 17,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700),
+                      style: GoogleFonts.anaheim().copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
+                      ),
                     ),
                     IconButton(
                       highlightColor: Colors.transparent,
                       onPressed: () => Navigator.pop(context),
-                      icon: Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                            color: Color(0xff3A3A3B), shape: BoxShape.circle),
-                        child: Icon(
-                          Icons.close_rounded,
-                          color: Color(0xffA4A4AA),
-                          size: 20,
-                        ),
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                        size: 20,
                       ),
                     ),
                   ],
@@ -99,13 +109,19 @@ class _IosColorPickerState extends State<IosColorPicker> {
 
               ///ALL
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
                   'OPACITY',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 13, color: Colors.white.withValues(alpha: 0.6)),
+                  style: GoogleFonts.anaheim().copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                  ),
                 ),
               ),
+              SizedBox(height: 10.0),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -114,7 +130,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 2),
                       child: SizedBox(
-                        height: 36.0,
+                        height: 30.0,
                         child: ValueListenableBuilder<Color>(
                           valueListenable: colorController,
                           builder: (context, color, child) {
@@ -130,8 +146,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     ),
                   ),
                   Container(
-                    height: 36,
-                    width: 77,
+                    height: 32,
+                    width: 72,
                     margin: const EdgeInsets.only(right: 16, left: 16),
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(
@@ -143,14 +159,14 @@ class _IosColorPickerState extends State<IosColorPicker> {
                         int alpha = (color.a * 100).toInt();
                         return Text(
                           "$alpha%",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                                  fontSize: 16,
-                                  letterSpacing: 0.6,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
+                          style: GoogleFonts.anaheim().copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.black
+                                    : Colors.white,
+                          ),
                         );
                       },
                     ),
@@ -161,7 +177,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
               //   height: 44,
               // ),
               Divider(
-                height: 44,
+                height: 30,
                 thickness: 0.2,
                 indent: 17,
                 endIndent: 17,
@@ -172,8 +188,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                   Stack(
                     children: [
                       Container(
-                        height: 78,
-                        width: 78,
+                        height: 70,
+                        width: 70,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         margin: const EdgeInsets.only(
                           left: 16,
@@ -200,16 +216,17 @@ class _IosColorPickerState extends State<IosColorPicker> {
                         valueListenable: colorController,
                         builder: (context, color, child) {
                           return Container(
-                            height: 78,
-                            width: 78,
+                            height: 70,
+                            width: 70,
                             margin: const EdgeInsets.only(
                               left: 16,
                             ),
                             decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                color: color),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              color: color,
+                            ),
                           );
                         },
                       ),
