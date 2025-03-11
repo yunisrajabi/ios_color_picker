@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'custom_picker/color_observer.dart';
-import 'custom_picker/ios_color_picker.dart';
 import 'custom_picker/extensions.dart';
+import 'custom_picker/ios_color_picker.dart';
 import 'native_picker/ios_color_picker_platform_interface.dart';
 
 ///Don't forget to Dispose the controller
@@ -53,6 +55,10 @@ class IOSColorPickerController {
     required BuildContext context,
     required ValueChanged<Color> onColorChanged,
     Color? startingColor,
+    Color? color,
+    TextStyle? textStyle,
+    Color? backgroundColor,
+    Color? barrierColor,
   }) async {
     colorController = ColorController(startingColor ?? selectedColor);
     return showModalBottomSheet(
