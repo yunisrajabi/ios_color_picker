@@ -13,12 +13,10 @@ class IosColorPicker extends StatefulWidget {
   const IosColorPicker({
     super.key,
     required this.onColorSelected,
-    required this.color,
   });
 
   ///returns the selected color
   final ValueChanged<Color> onColorSelected;
-  final Color color;
 
   @override
   State<IosColorPicker> createState() => _IosColorPickerState();
@@ -28,7 +26,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
   @override
   void initState() {
     CacheHelper.init();
-    super.initState();
+    super.initState(); // Access the current theme
   }
 
   @override
@@ -46,15 +44,11 @@ class _IosColorPickerState extends State<IosColorPicker> {
           ),
         ),
         Container(
-          margin: EdgeInsets.all(20.0),
+          margin: EdgeInsets.all(10.0),
           // width: maxWidth(context),
           // height: 340 + componentsHeight(context),
           decoration: BoxDecoration(
-            color: widget.color,
-            // color: Theme.of(context).brightness == Brightness.light
-            //     ? Colors.white
-            //     : Colors.black,
-            //backgroundColor.withValues(alpha: 0.98),
+            color: Colors.grey.shade50,
             borderRadius: BorderRadius.all(
               Radius.circular(20.0),
               // topRight: Radius.circular(10),
@@ -93,10 +87,10 @@ class _IosColorPickerState extends State<IosColorPicker> {
                       highlightColor: Colors.transparent,
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(
-                        Icons.close_rounded,
+                        Icons.check_circle_rounded,
                         color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black,
+                            ? Colors.white70
+                            : Colors.black87,
                         size: 20,
                       ),
                     ),
