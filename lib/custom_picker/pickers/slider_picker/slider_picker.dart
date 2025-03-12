@@ -134,17 +134,16 @@ class _SlidePickerState extends State<SlidePicker> {
     List<SizedBox> sliders = [
       for (TrackType trackType in trackTypes)
         SizedBox(
-          height: 64,
+          height: 66,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   trackType.toString().split('.').last.toUpperCase(),
                   style: GoogleFonts.anaheim().copyWith(
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).brightness == Brightness.light
                         ? Colors.black

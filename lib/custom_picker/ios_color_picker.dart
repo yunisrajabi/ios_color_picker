@@ -48,7 +48,9 @@ class _IosColorPickerState extends State<IosColorPicker> {
           // width: maxWidth(context),
           // height: 340 + componentsHeight(context),
           decoration: BoxDecoration(
-            color: Colors.grey.shade50,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey.shade50
+                : Colors.grey.shade900,
             borderRadius: BorderRadius.all(
               Radius.circular(20.0),
               // topRight: Radius.circular(10),
@@ -208,9 +210,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                           return Container(
                             height: 70,
                             width: 70,
-                            margin: const EdgeInsets.only(
-                              left: 16,
-                            ),
+                            margin: const EdgeInsets.only(left: 16),
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(10),
