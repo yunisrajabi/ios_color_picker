@@ -145,6 +145,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                         color: Theme.of(context).brightness == Brightness.light
                             ? Colors.white
                             : Colors.grey.shade800,
+                        border: Border.all(
+                            color: Colors.black.withValues(alpha: 0.03)),
                         borderRadius: BorderRadius.all(Radius.circular(100))),
                     child: ValueListenableBuilder<Color>(
                       valueListenable: colorController,

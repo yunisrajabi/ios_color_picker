@@ -166,6 +166,8 @@ class _SlidePickerState extends State<SlidePicker> {
                               Theme.of(context).brightness == Brightness.light
                                   ? Colors.white
                                   : Colors.grey.shade800,
+                          border: Border.all(
+                              color: Colors.black.withValues(alpha: 0.03)),
                           borderRadius: BorderRadius.all(Radius.circular(100))),
                       child: Text(
                         getColorParams(trackTypes.indexOf(trackType)),

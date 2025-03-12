@@ -53,7 +53,6 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
             color: Theme.of(context).brightness == Brightness.light
                 ? Colors.white
                 : Colors.grey.shade800,
-            //color: sliderColor,
             border: Border.all(color: Colors.black.withValues(alpha: 0.03)),
             borderRadius: const BorderRadius.all(
               Radius.circular(100),
