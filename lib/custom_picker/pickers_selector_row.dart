@@ -50,7 +50,9 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
           padding: const EdgeInsets.all(2),
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.white
+                : Colors.grey.shade800,
             //color: sliderColor,
             border: Border.all(color: Colors.grey.shade100),
             borderRadius: const BorderRadius.all(

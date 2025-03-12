@@ -78,8 +78,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.black
-                            : Colors.white,
+                            ? Colors.black87
+                            : Colors.white70,
                       ),
                     ),
                     TextButton(
@@ -142,7 +142,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     margin: const EdgeInsets.only(right: 16, left: 16),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.transparent,
                         border: Border.all(color: Colors.grey.shade100),
                         borderRadius: BorderRadius.all(Radius.circular(100))),
                     child: ValueListenableBuilder<Color>(
