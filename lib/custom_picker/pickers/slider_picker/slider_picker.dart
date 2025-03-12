@@ -136,7 +136,7 @@ class _SlidePickerState extends State<SlidePicker> {
         SizedBox(
           height: 64,
           child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding:
@@ -162,17 +162,17 @@ class _SlidePickerState extends State<SlidePicker> {
                       width: 72,
                       margin: const EdgeInsets.only(left: 28),
                       alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                          color: valueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                      decoration: BoxDecoration(
+                          //color: valueColor,
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey.shade100),
+                          borderRadius: BorderRadius.all(Radius.circular(100))),
                       child: Text(
                         getColorParams(trackTypes.indexOf(trackType)),
                         style: GoogleFonts.anaheim().copyWith(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? Colors.black
-                              : Colors.white,
+                          color: Colors.blue,
                         ),
                       ),
                     ),
@@ -197,35 +197,21 @@ class _SlidePickerState extends State<SlidePicker> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Display P3 Hex Color #",
+                "Display P3 Hex Color ",
                 style: GoogleFonts.anaheim().copyWith(
-                  fontSize: 15,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: Theme.of(context).brightness == Brightness.light
                       ? Colors.black
                       : Colors.white,
                 ),
               ),
-              Container(
-                height: 30,
-                width: 90,
-                margin: const EdgeInsets.only(left: 8),
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: valueColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  currentHsvColor.toColor().toHex(),
-                  style: GoogleFonts.anaheim().copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.black
-                        : Colors.white,
-                  ),
+              Text(
+                '#${currentHsvColor.toColor().toHex()}',
+                style: GoogleFonts.anaheim().copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.blue,
                 ),
               ),
             ],

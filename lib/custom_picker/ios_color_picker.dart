@@ -84,14 +84,13 @@ class _IosColorPickerState extends State<IosColorPicker> {
                       ),
                     ),
                     IconButton(
-                      highlightColor: Colors.transparent,
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(
                         Icons.check_circle_rounded,
                         color: Theme.of(context).brightness == Brightness.dark
                             ? Colors.white70
                             : Colors.black87,
-                        size: 20,
+                        size: 22,
                       ),
                     ),
                   ],
@@ -121,10 +120,9 @@ class _IosColorPickerState extends State<IosColorPicker> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: SizedBox(
-                        height: 30.0,
+                        height: 34.0,
                         child: ValueListenableBuilder<Color>(
                           valueListenable: colorController,
                           builder: (context, color, child) {
@@ -144,9 +142,10 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     width: 72,
                     margin: const EdgeInsets.only(right: 16, left: 16),
                     alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                        color: valueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey.shade100),
+                        borderRadius: BorderRadius.all(Radius.circular(100))),
                     child: ValueListenableBuilder<Color>(
                       valueListenable: colorController,
                       builder: (context, color, child) {
@@ -156,10 +155,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                           style: GoogleFonts.anaheim().copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.black
-                                    : Colors.white,
+                            color: Colors.blue,
                           ),
                         );
                       },

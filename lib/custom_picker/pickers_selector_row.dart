@@ -45,13 +45,18 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
     return Column(
       children: [
         Container(
-          height: 32,
+          height: 40,
           margin: const EdgeInsets.symmetric(horizontal: 16),
           padding: const EdgeInsets.all(2),
           width: double.infinity,
           decoration: BoxDecoration(
-              color: sliderColor,
-              borderRadius: const BorderRadius.all(Radius.circular(9))),
+            color: Colors.white,
+            //color: sliderColor,
+            border: Border.all(color: Colors.grey.shade100),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(100),
+            ),
+          ),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -66,10 +71,12 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                         Spacer(),
                         if (index != 2)
                           Container(
-                              height: 16,
-                              width: 1,
-                              color: const Color(0xffCFCFD5)
-                                  .withValues(alpha: 0.3))
+                            height: 16,
+                            width: 1,
+                            color: Colors.transparent,
+                            //  const Color(0xffCFCFD5)
+                            //     .withValues(alpha: 0.2),
+                          )
                         else
                           const SizedBox(height: 16, width: 1),
                       ],
@@ -85,11 +92,13 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                         : Alignment.centerRight,
                 duration: const Duration(milliseconds: 200),
                 child: Container(
-                  width: ((maxWidth(context) - 32) / 3),
+                  width: ((maxWidth(context) - 40) / 3),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: selectedSliderColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(7)),
+                      color: Colors.blue,
+                      //color: selectedSliderColor,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(100)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.04),
@@ -122,10 +131,9 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                               style: GoogleFonts.anaheim().copyWith(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? Colors.black
-                                    : Colors.white,
+                                color: typeIndex == index
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                               // style: Theme.of(context)
                               //     .textTheme
