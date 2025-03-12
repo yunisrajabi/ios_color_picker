@@ -143,7 +143,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: Colors.transparent,
-                        border: Border.all(color: Colors.grey.shade100),
+                        border: Border.all(color: Colors.grey.shade50),
                         borderRadius: BorderRadius.all(Radius.circular(100))),
                     child: ValueListenableBuilder<Color>(
                       valueListenable: colorController,

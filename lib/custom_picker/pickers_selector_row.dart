@@ -52,9 +52,9 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.light
                 ? Colors.white
-                : Colors.grey.shade800,
+                : Colors.grey.shade900,
             //color: sliderColor,
-            border: Border.all(color: Colors.grey.shade100),
+            border: Border.all(color: Colors.black.withValues(alpha: 0.03)),
             borderRadius: const BorderRadius.all(
               Radius.circular(100),
             ),
@@ -133,9 +133,12 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                               style: GoogleFonts.anaheim().copyWith(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: typeIndex == index
-                                    ? Colors.white
-                                    : Colors.black,
+                                color: Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? typeIndex == index
+                                        ? Colors.white
+                                        : Colors.black
+                                    : Colors.white,
                               ),
                               // style: Theme.of(context)
                               //     .textTheme
