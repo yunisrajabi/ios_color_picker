@@ -63,7 +63,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(
-                  16,
+                  20,
                   0,
                   8,
                   2,
@@ -72,11 +72,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      width: 40,
-                    ),
                     Text(
-                      'Colors',
+                      'Color Picker',
                       style: GoogleFonts.anaheim().copyWith(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -85,9 +82,9 @@ class _IosColorPickerState extends State<IosColorPicker> {
                             : Colors.white,
                       ),
                     ),
-                    IconButton(
+                    TextButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(
+                      child: Icon(
                         Icons.check_circle_rounded,
                         color: Theme.of(context).brightness == Brightness.dark
                             ? Colors.white70
