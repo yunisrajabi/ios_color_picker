@@ -163,8 +163,10 @@ class _SlidePickerState extends State<SlidePicker> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           //color: valueColor,
-                          color: Colors.transparent,
-                          border: Border.all(color: Colors.grey.shade100),
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.white
+                                  : Colors.grey.shade800,
                           borderRadius: BorderRadius.all(Radius.circular(100))),
                       child: Text(
                         getColorParams(trackTypes.indexOf(trackType)),
