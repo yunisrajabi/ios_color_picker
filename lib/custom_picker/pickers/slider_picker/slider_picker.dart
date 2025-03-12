@@ -162,7 +162,6 @@ class _SlidePickerState extends State<SlidePicker> {
                       margin: const EdgeInsets.only(left: 28),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          //color: valueColor,
                           color:
                               Theme.of(context).brightness == Brightness.light
                                   ? Colors.white
