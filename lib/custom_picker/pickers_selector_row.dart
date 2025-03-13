@@ -50,10 +50,18 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
           padding: const EdgeInsets.all(2),
           width: double.infinity,
           decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0, 0.5),
+                blurRadius: 2,
+                spreadRadius: 1,
+              ),
+            ],
             color: Theme.of(context).brightness == Brightness.light
                 ? Colors.white
                 : Colors.grey.shade800,
-            border: Border.all(color: Colors.black.withValues(alpha: 0.03)),
+            border: Border.all(color: Colors.black.withValues(alpha: 0.02)),
             borderRadius: const BorderRadius.all(
               Radius.circular(100),
             ),
@@ -128,9 +136,11 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                         Expanded(
                           child: Center(
                             child: Text(
+                              textScaler: TextScaler.noScaling,
+                              overflow: TextOverflow.ellipsis,
                               typeText[index],
                               style: GoogleFonts.anaheim().copyWith(
-                                fontSize: 14,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: Theme.of(context).brightness ==
                                         Brightness.light

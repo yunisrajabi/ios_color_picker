@@ -141,6 +141,8 @@ class _SlidePickerState extends State<SlidePicker> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
+                  textScaler: TextScaler.noScaling,
+                  overflow: TextOverflow.ellipsis,
                   trackType.toString().split('.').last.toUpperCase(),
                   style: GoogleFonts.anaheim().copyWith(
                     fontSize: 13,
@@ -157,8 +159,8 @@ class _SlidePickerState extends State<SlidePicker> {
                   children: [
                     Expanded(child: colorPickerSlider(trackType)),
                     Container(
-                      height: 30,
-                      width: 72,
+                      height: 36,
+                      width: 70,
                       margin: const EdgeInsets.only(left: 28),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -166,10 +168,10 @@ class _SlidePickerState extends State<SlidePicker> {
                               Theme.of(context).brightness == Brightness.light
                                   ? Colors.white
                                   : Colors.grey.shade800,
-                          border: Border.all(
-                              color: Colors.black.withValues(alpha: 0.03)),
                           borderRadius: BorderRadius.all(Radius.circular(100))),
                       child: Text(
+                        textScaler: TextScaler.noScaling,
+                        overflow: TextOverflow.ellipsis,
                         getColorParams(trackTypes.indexOf(trackType)),
                         style: GoogleFonts.anaheim().copyWith(
                           fontSize: 16,
@@ -199,6 +201,8 @@ class _SlidePickerState extends State<SlidePicker> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
+                textScaler: TextScaler.noScaling,
+                overflow: TextOverflow.ellipsis,
                 "Display P3 Hex Color ",
                 style: GoogleFonts.anaheim().copyWith(
                   fontSize: 16,
@@ -209,6 +213,8 @@ class _SlidePickerState extends State<SlidePicker> {
                 ),
               ),
               Text(
+                textScaler: TextScaler.noScaling,
+                overflow: TextOverflow.ellipsis,
                 '#${currentHsvColor.toColor().toHex()}',
                 style: GoogleFonts.anaheim().copyWith(
                   fontSize: 16,

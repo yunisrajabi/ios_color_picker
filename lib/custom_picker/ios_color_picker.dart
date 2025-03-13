@@ -73,6 +73,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
+                      textScaler: TextScaler.noScaling,
+                      overflow: TextOverflow.ellipsis,
                       'Color Picker',
                       style: GoogleFonts.anaheim().copyWith(
                         fontSize: 18,
@@ -103,6 +105,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
+                  textScaler: TextScaler.noScaling,
+                  overflow: TextOverflow.ellipsis,
                   'OPACITY',
                   style: GoogleFonts.anaheim().copyWith(
                     fontSize: 15,
@@ -137,22 +141,22 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     ),
                   ),
                   Container(
-                    height: 32,
-                    width: 72,
+                    height: 36,
+                    width: 70,
                     margin: const EdgeInsets.only(right: 16, left: 16),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: Theme.of(context).brightness == Brightness.light
                             ? Colors.white
                             : Colors.grey.shade800,
-                        border: Border.all(
-                            color: Colors.black.withValues(alpha: 0.03)),
                         borderRadius: BorderRadius.all(Radius.circular(100))),
                     child: ValueListenableBuilder<Color>(
                       valueListenable: colorController,
                       builder: (context, color, child) {
                         int alpha = (color.a * 100).toInt();
                         return Text(
+                          textScaler: TextScaler.noScaling,
+                          overflow: TextOverflow.ellipsis,
                           "$alpha%",
                           style: GoogleFonts.anaheim().copyWith(
                             fontSize: 16,

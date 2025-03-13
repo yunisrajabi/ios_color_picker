@@ -174,6 +174,8 @@ class _HistoryColorsState extends State<HistoryColors> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 12),
                           child: Text(
+                            textScaler: TextScaler.noScaling,
+                            overflow: TextOverflow.ellipsis,
                             "Delete",
                             style: GoogleFonts.anaheim().copyWith(
                               fontSize: 14,
