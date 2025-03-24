@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -289,7 +290,7 @@ class _SlidePickerState extends State<SlidePicker> {
                                 decoration: const InputDecoration(
                                   counterText: '',
                                   contentPadding:
-                                      EdgeInsets.only(bottom: 5.0, right: 8.0),
+                                      EdgeInsets.only(bottom: 8.0, right: 8.0),
                                   border: InputBorder.none,
                                 ),
                                 style: GoogleFonts.anaheim().copyWith(
@@ -310,6 +311,56 @@ class _SlidePickerState extends State<SlidePicker> {
                   Clipboard.setData(
                     ClipboardData(
                       text: '#${currentHsvColor.toColor().toHex()}',
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            CupertinoIcons.check_mark_circled_solid,
+                            size: 24,
+                            color: Colors.green,
+                          ),
+                          SizedBox(width: 12.0),
+                          Text(
+                            textScaler: TextScaler.noScaling,
+                            overflow: TextOverflow.ellipsis,
+                            'Copied #${currentHsvColor.toColor().toHex()}',
+                            style: GoogleFonts.anaheim().copyWith(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.grey[800]
+                                  : Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      duration: const Duration(seconds: 2),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                        side: BorderSide(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.black12
+                                  : Colors.white10,
+                        ),
+                      ),
+                      margin: EdgeInsets.only(
+                        left: 20.0,
+                        right: 20.0,
+                        bottom: MediaQuery.sizeOf(context).height * 0.8,
+                      ),
+                      elevation: 0.0,
+                      dismissDirection: DismissDirection.horizontal,
+                      backgroundColor:
+                          Theme.of(context).brightness == Brightness.light
+                              ? Colors.grey[200]
+                              : Colors.grey[850],
                     ),
                   );
                 },
