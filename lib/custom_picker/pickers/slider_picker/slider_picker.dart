@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/extensions.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_helper.dart';
@@ -57,17 +58,57 @@ class SlidePicker extends StatefulWidget {
 
 class _SlidePickerState extends State<SlidePicker> {
   HSVColor currentHsvColor = const HSVColor.fromAHSV(0.0, 0.0, 0.0, 0.0);
+  final List<TextEditingController> _hexControllers =
+      List.generate(6, (_) => TextEditingController());
 
   @override
   void initState() {
     super.initState();
     currentHsvColor = HSVColor.fromColor(widget.pickerColor);
+    _updateHexControllers();
   }
 
   @override
   void didUpdateWidget(SlidePicker oldWidget) {
     super.didUpdateWidget(oldWidget);
     currentHsvColor = HSVColor.fromColor(widget.pickerColor);
+    _updateHexControllers();
+  }
+
+  @override
+  void dispose() {
+    for (var controller in _hexControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  void _updateHexControllers() {
+    final hex = currentHsvColor.toColor().toHex();
+    for (int i = 0; i < 6; i++) {
+      _hexControllers[i].text = hex[i];
+    }
+  }
+
+  void _updateColorFromHex(int index, String value) {
+    if (value.length <= 1) {
+      final hexColor = _hexControllers.map((c) => c.text).join();
+      if (hexColor.length == 6) {
+        try {
+          final color = Color(int.parse('0xFF$hexColor'));
+          setState(() {
+            currentHsvColor = HSVColor.fromColor(color);
+          });
+          widget.onColorChanged(currentHsvColor.toColor());
+        } catch (e) {
+          // Invalid hex code
+        }
+      }
+      // اگر کاراکتر وارد شده و فیلد بعدی وجود دارد، به فیلد بعدی برو
+      if (index < 5 && value.isNotEmpty) {
+        FocusScope.of(context).nextFocus();
+      }
+    }
   }
 
   Widget colorPickerSlider(TrackType trackType) {
@@ -193,8 +234,6 @@ class _SlidePickerState extends State<SlidePicker> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!widget.showIndicator) const SizedBox(height: 20),
-        ...sliders,
-        const SizedBox(height: 16.0),
         Align(
           alignment: Alignment.center,
           child: Row(
@@ -203,7 +242,7 @@ class _SlidePickerState extends State<SlidePicker> {
               Text(
                 textScaler: TextScaler.noScaling,
                 overflow: TextOverflow.ellipsis,
-                "Display P3 Hex Color ",
+                "Hex Color:  ",
                 style: GoogleFonts.anaheim().copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -212,20 +251,75 @@ class _SlidePickerState extends State<SlidePicker> {
                       : Colors.white,
                 ),
               ),
-              Text(
-                textScaler: TextScaler.noScaling,
-                overflow: TextOverflow.ellipsis,
-                '#${currentHsvColor.toColor().toHex()}',
-                style: GoogleFonts.anaheim().copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.blue,
+              Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.white
+                      : Colors.grey.shade800,
+                  borderRadius: BorderRadius.circular(100.0),
                 ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        '#',
+                        style: GoogleFonts.anaheim().copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                    ...List.generate(
+                        6,
+                        (index) => SizedBox(
+                              width: 24,
+                              child: TextField(
+                                cursorRadius: Radius.circular(100.0),
+                                // cursorColor: Theme.of(context).brightness ==
+                                //         Brightness.dark
+                                //     ? Colors.white
+                                //     : Colors.grey.shade800,
+                                controller: _hexControllers[index],
+                                textAlign: TextAlign.center,
+                                maxLength: 1,
+                                decoration: const InputDecoration(
+                                  counterText: '',
+                                  contentPadding:
+                                      EdgeInsets.only(bottom: 5.0, right: 8.0),
+                                  border: InputBorder.none,
+                                ),
+                                style: GoogleFonts.anaheim().copyWith(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.blue,
+                                ),
+                                onChanged: (value) =>
+                                    _updateColorFromHex(index, value),
+                              ),
+                            )),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.copy, size: 20),
+                onPressed: () {
+                  Clipboard.setData(
+                    ClipboardData(
+                      text: '#${currentHsvColor.toColor().toHex()}',
+                    ),
+                  );
+                },
               ),
             ],
           ),
         ),
-        // const SizedBox(height: 23.0),
+        const SizedBox(height: 20),
+        ...sliders,
+        const SizedBox(height: 16.0),
       ],
     );
   }
