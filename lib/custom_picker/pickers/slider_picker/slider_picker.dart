@@ -262,6 +262,9 @@ class _SlidePickerState extends State<SlidePicker> {
                   ),
                   Expanded(
                     child: TextField(
+                      contextMenuBuilder: (context, editableTextState) {
+                        return SizedBox.shrink();
+                      },
                       cursorRadius: const Radius.circular(100.0),
                       controller: _hexController,
                       textAlign: TextAlign.center,
@@ -269,11 +272,11 @@ class _SlidePickerState extends State<SlidePicker> {
                       decoration: const InputDecoration(
                         counterText: '',
                         contentPadding:
-                            EdgeInsets.only(bottom: 10.0, right: 10.0),
+                            EdgeInsets.only(bottom: 16.0, right: 10.0),
                         border: InputBorder.none,
                       ),
                       style: GoogleFonts.anaheim().copyWith(
-                        fontSize: 16,
+                        fontSize: 17,
                         fontWeight: FontWeight.w600,
                         color: Colors.blue,
                       ),
@@ -288,7 +291,7 @@ class _SlidePickerState extends State<SlidePicker> {
               onPressed: () {
                 Clipboard.setData(
                   ClipboardData(
-                    text: '#${currentHsvColor.toColor().toHex()}',
+                    text: currentHsvColor.toColor().toHex(),
                   ),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(
