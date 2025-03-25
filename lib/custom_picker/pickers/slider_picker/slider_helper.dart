@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+
 import '../../palette.dart';
 import '../../shared.dart';
 import '../../utils.dart';
@@ -126,7 +127,7 @@ class ColorPickerSlider extends StatelessWidget {
           LayoutId(
             id: _SliderLayout.track,
             child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(50.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(100.0)),
               child: CustomPaint(
                   painter: TrackPainter(
                 trackType,
@@ -182,7 +183,7 @@ class _SliderLayout extends MultiChildLayoutDelegate {
       track,
       BoxConstraints.tightFor(
         width: size.width + (small ? 0 : 6),
-        height: small ? 20 : 36,
+        height: small ? 13.33 : 24,
       ),
     );
     positionChild(track, Offset(small ? 0.0 : 5, 0));
@@ -190,10 +191,10 @@ class _SliderLayout extends MultiChildLayoutDelegate {
       thumb,
       BoxConstraints.tightFor(
         width: 5.0,
-        height: small ? 20 : 36,
+        height: small ? 13.33 : 24,
       ),
     );
-    positionChild(thumb, Offset(0.0, (small ? 5 : 12)));
+    positionChild(thumb, Offset(0.0, (small ? 3.33 : 8)));
     layoutChild(
       gestureContainer,
       BoxConstraints.tightFor(width: size.width, height: size.height),

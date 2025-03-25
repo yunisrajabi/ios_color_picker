@@ -59,7 +59,7 @@ class IOSColorPickerController {
     colorController = ColorController(startingColor ?? selectedColor);
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
-        barrierColor: Colors.black26,
+        barrierColor: Colors.black12,
         isScrollControlled: true,
         context: context,
         builder: (context) {

@@ -18,7 +18,7 @@ class PickersSelectorRow extends StatefulWidget {
 
 class _PickersSelectorRowState extends State<PickersSelectorRow> {
   int typeIndex = 0;
-  final List<String> typeText = ["Grid", "Spectrum", "Sliders"];
+  final List<String> typeText = ["Grids", "Spectrum", "Sliders"];
 
   @override
   void initState() {

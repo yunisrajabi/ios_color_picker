@@ -85,15 +85,15 @@ class ThumbPainter extends CustomPainter {
       true,
     );
     canvas.drawCircle(
-        const Offset(8.0, 14 * 0.4),
-        small ? 14 : 15.5,
+        const Offset(8.0, 14 * 0.3),
+        small ? 11 : 11,
         Paint()
           ..color = Colors.white
           ..style = PaintingStyle.fill);
     if (!small) {
       canvas.drawCircle(
-          const Offset(8.0, 14 * 0.4),
-          13.5,
+          const Offset(8.0, 14 * 0.3),
+          9.5,
           Paint()
             ..color = hsvColor.toColor().withValues(alpha: 1)
             ..style = PaintingStyle.fill);

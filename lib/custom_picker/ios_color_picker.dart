@@ -47,7 +47,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
         Container(
           margin: EdgeInsets.all(10.0),
           // width: maxWidth(context),
-          // height: 340 + componentsHeight(context),
+          //height: 340 + componentsHeight(context),
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.light
                 ? Colors.grey.shade50
@@ -58,181 +58,191 @@ class _IosColorPickerState extends State<IosColorPicker> {
               // topLeft: Radius.circular(10),
             ),
           ),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  20,
-                  0,
-                  8,
-                  2,
+          child: SingleChildScrollView(
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    20,
+                    0,
+                    8,
+                    4,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        textScaler: TextScaler.noScaling,
+                        overflow: TextOverflow.ellipsis,
+                        'Color Picker',
+                        style: GoogleFonts.anaheim().copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.black87
+                                  : Colors.white70,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(
+                          CupertinoIcons.check_mark_circled_solid,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white70
+                              : Colors.black87,
+                          size: 24,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                PickersSelectorRow(
+                  onColorChanged: widget.onColorSelected,
+                ),
+
+                ///ALL
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                    right: 20.0,
+                  ),
+                  child: Text(
+                    textScaler: TextScaler.noScaling,
+                    overflow: TextOverflow.ellipsis,
+                    'OPACITY',
+                    style: GoogleFonts.anaheim().copyWith(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      textScaler: TextScaler.noScaling,
-                      overflow: TextOverflow.ellipsis,
-                      'Color Picker',
-                      style: GoogleFonts.anaheim().copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.black87
-                            : Colors.white70,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(
-                        CupertinoIcons.check_mark_circled_solid,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white70
-                            : Colors.black87,
-                        size: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              PickersSelectorRow(
-                onColorChanged: widget.onColorSelected,
-              ),
-
-              ///ALL
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text(
-                  textScaler: TextScaler.noScaling,
-                  overflow: TextOverflow.ellipsis,
-                  'OPACITY',
-                  style: GoogleFonts.anaheim().copyWith(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.black
-                        : Colors.white,
-                  ),
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: SizedBox(
-                        height: 34.0,
-                        child: ValueListenableBuilder<Color>(
-                          valueListenable: colorController,
-                          builder: (context, color, child) {
-                            return ColorPickerSlider(
-                                TrackType.alpha, HSVColor.fromColor(color),
-                                small: false, (v) {
-                              colorController.updateOpacity(v.alpha);
-                              widget.onColorSelected(colorController.value);
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 36,
-                    width: 70,
-                    margin: const EdgeInsets.only(right: 16, left: 16),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.white
-                            : Colors.grey.shade800,
-                        borderRadius: BorderRadius.all(Radius.circular(100))),
-                    child: ValueListenableBuilder<Color>(
-                      valueListenable: colorController,
-                      builder: (context, color, child) {
-                        int alpha = (color.a * 100).toInt();
-                        return Text(
-                          textScaler: TextScaler.noScaling,
-                          overflow: TextOverflow.ellipsis,
-                          "$alpha%",
-                          style: GoogleFonts.anaheim().copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.blue,
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                ],
-              ),
-              // const SizedBox(
-              //   height: 44,
-              // ),
-              Divider(
-                height: 30,
-                thickness: 0.2,
-                indent: 17,
-                endIndent: 17,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: 70,
-                        width: 70,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        margin: const EdgeInsets.only(
-                          left: 16,
-                        ),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        child: Transform.scale(
-                          scale: 1.5,
-                          child: Transform.rotate(
-                            angle: 0.76,
-                            child: Row(
-                              children: [
-                                Expanded(child: Container(color: Colors.white)),
-                                Expanded(child: Container(color: Colors.black)),
-                              ],
-                            ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: SizedBox(
+                          height: 24,
+                          width: 60,
+                          child: ValueListenableBuilder<Color>(
+                            valueListenable: colorController,
+                            builder: (context, color, child) {
+                              return ColorPickerSlider(
+                                  TrackType.alpha, HSVColor.fromColor(color),
+                                  small: false, (v) {
+                                colorController.updateOpacity(v.alpha);
+                                widget.onColorSelected(colorController.value);
+                              });
+                            },
                           ),
                         ),
                       ),
-                      ValueListenableBuilder<Color>(
+                    ),
+                    Container(
+                      height: 27,
+                      width: 60,
+                      margin: const EdgeInsets.only(right: 16, left: 16),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.white
+                                  : Colors.grey.shade800,
+                          borderRadius: BorderRadius.all(Radius.circular(100))),
+                      child: ValueListenableBuilder<Color>(
                         valueListenable: colorController,
                         builder: (context, color, child) {
-                          return Container(
-                            height: 70,
-                            width: 70,
-                            margin: const EdgeInsets.only(left: 16),
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                              color: color,
+                          int alpha = (color.a * 100).toInt();
+                          return Text(
+                            textScaler: TextScaler.noScaling,
+                            overflow: TextOverflow.ellipsis,
+                            "$alpha%",
+                            style: GoogleFonts.anaheim().copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blue,
                             ),
                           );
                         },
                       ),
-                    ],
-                  ),
-                  HistoryColors(
-                    onColorChanged: widget.onColorSelected,
-                  )
-                ],
-              ),
-            ],
+                    )
+                  ],
+                ),
+                // const SizedBox(
+                //   height: 44,
+                // ),
+                Divider(
+                  height: 40,
+                  thickness: 0.2,
+                  indent: 17,
+                  endIndent: 17,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          height: 70,
+                          width: 70,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          margin: const EdgeInsets.only(
+                            left: 16,
+                          ),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          child: Transform.scale(
+                            scale: 1.5,
+                            child: Transform.rotate(
+                              angle: 0.76,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Container(color: Colors.white)),
+                                  Expanded(
+                                      child: Container(color: Colors.black)),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        ValueListenableBuilder<Color>(
+                          valueListenable: colorController,
+                          builder: (context, color, child) {
+                            return Container(
+                              height: 70,
+                              width: 70,
+                              margin: const EdgeInsets.only(left: 16),
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                                color: color,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    HistoryColors(
+                      onColorChanged: widget.onColorSelected,
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],

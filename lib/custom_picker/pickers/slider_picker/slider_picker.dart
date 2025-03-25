@@ -59,55 +59,42 @@ class SlidePicker extends StatefulWidget {
 
 class _SlidePickerState extends State<SlidePicker> {
   HSVColor currentHsvColor = const HSVColor.fromAHSV(0.0, 0.0, 0.0, 0.0);
-  final List<TextEditingController> _hexControllers =
-      List.generate(6, (_) => TextEditingController());
+  final TextEditingController _hexController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     currentHsvColor = HSVColor.fromColor(widget.pickerColor);
-    _updateHexControllers();
+    _updateHexController();
   }
 
   @override
   void didUpdateWidget(SlidePicker oldWidget) {
     super.didUpdateWidget(oldWidget);
     currentHsvColor = HSVColor.fromColor(widget.pickerColor);
-    _updateHexControllers();
+    _updateHexController();
   }
 
   @override
   void dispose() {
-    for (var controller in _hexControllers) {
-      controller.dispose();
-    }
+    _hexController.dispose();
     super.dispose();
   }
 
-  void _updateHexControllers() {
-    final hex = currentHsvColor.toColor().toHex();
-    for (int i = 0; i < 6; i++) {
-      _hexControllers[i].text = hex[i];
-    }
+  void _updateHexController() {
+    _hexController.text = currentHsvColor.toColor().toHex();
   }
 
-  void _updateColorFromHex(int index, String value) {
-    if (value.length <= 1) {
-      final hexColor = _hexControllers.map((c) => c.text).join();
-      if (hexColor.length == 6) {
-        try {
-          final color = Color(int.parse('0xFF$hexColor'));
-          setState(() {
-            currentHsvColor = HSVColor.fromColor(color);
-          });
-          widget.onColorChanged(currentHsvColor.toColor());
-        } catch (e) {
-          // Invalid hex code
-        }
-      }
-      // اگر کاراکتر وارد شده و فیلد بعدی وجود دارد، به فیلد بعدی برو
-      if (index < 5 && value.isNotEmpty) {
-        FocusScope.of(context).nextFocus();
+  void _updateColorFromHex(String value) {
+    if (value.length == 6) {
+      try {
+        final color = Color(int.parse('0xFF$value'));
+        setState(() {
+          currentHsvColor = HSVColor.fromColor(color);
+        });
+        widget.onColorChanged(currentHsvColor.toColor());
+      } catch (e) {
+        // Invalid hex code
       }
     }
   }
@@ -176,7 +163,7 @@ class _SlidePickerState extends State<SlidePicker> {
     List<SizedBox> sliders = [
       for (TrackType trackType in trackTypes)
         SizedBox(
-          height: 66,
+          height: 60,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -201,8 +188,8 @@ class _SlidePickerState extends State<SlidePicker> {
                   children: [
                     Expanded(child: colorPickerSlider(trackType)),
                     Container(
-                      height: 36,
-                      width: 70,
+                      height: 25,
+                      width: 60,
                       margin: const EdgeInsets.only(left: 28),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -235,142 +222,130 @@ class _SlidePickerState extends State<SlidePicker> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!widget.showIndicator) const SizedBox(height: 20),
-        Align(
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                textScaler: TextScaler.noScaling,
-                overflow: TextOverflow.ellipsis,
-                "Hex Color:  ",
-                style: GoogleFonts.anaheim().copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.black
-                      : Colors.white,
-                ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              textScaler: TextScaler.noScaling,
+              overflow: TextOverflow.ellipsis,
+              "Hex Color:  ",
+              style: GoogleFonts.anaheim().copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black
+                    : Colors.white,
               ),
-              Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.white
-                      : Colors.grey.shade800,
-                  borderRadius: BorderRadius.circular(100.0),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        '#',
-                        style: GoogleFonts.anaheim().copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.blue,
+            ),
+            Container(
+              height: 36,
+              width: 90,
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.white
+                    : Colors.grey.shade800,
+                borderRadius: BorderRadius.circular(100.0),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Text(
+                      '#',
+                      style: GoogleFonts.anaheim().copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      cursorRadius: const Radius.circular(100.0),
+                      controller: _hexController,
+                      textAlign: TextAlign.center,
+                      maxLength: 6,
+                      decoration: const InputDecoration(
+                        counterText: '',
+                        contentPadding:
+                            EdgeInsets.only(bottom: 10.0, right: 10.0),
+                        border: InputBorder.none,
+                      ),
+                      style: GoogleFonts.anaheim().copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blue,
+                      ),
+                      onChanged: _updateColorFromHex,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.copy, size: 20),
+              onPressed: () {
+                Clipboard.setData(
+                  ClipboardData(
+                    text: '#${currentHsvColor.toColor().toHex()}',
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          CupertinoIcons.check_mark_circled_solid,
+                          size: 24,
+                          color: Colors.green,
                         ),
-                      ),
-                    ),
-                    ...List.generate(
-                        6,
-                        (index) => SizedBox(
-                              width: 24,
-                              child: TextField(
-                                cursorRadius: Radius.circular(100.0),
-                                // cursorColor: Theme.of(context).brightness ==
-                                //         Brightness.dark
-                                //     ? Colors.white
-                                //     : Colors.grey.shade800,
-                                controller: _hexControllers[index],
-                                textAlign: TextAlign.center,
-                                maxLength: 1,
-                                decoration: const InputDecoration(
-                                  counterText: '',
-                                  contentPadding:
-                                      EdgeInsets.only(bottom: 8.0, right: 8.0),
-                                  border: InputBorder.none,
-                                ),
-                                style: GoogleFonts.anaheim().copyWith(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.blue,
-                                ),
-                                onChanged: (value) =>
-                                    _updateColorFromHex(index, value),
-                              ),
-                            )),
-                  ],
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.copy, size: 20),
-                onPressed: () {
-                  Clipboard.setData(
-                    ClipboardData(
-                      text: '#${currentHsvColor.toColor().toHex()}',
-                    ),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            CupertinoIcons.check_mark_circled_solid,
-                            size: 24,
-                            color: Colors.green,
+                        SizedBox(width: 12.0),
+                        Text(
+                          textScaler: TextScaler.noScaling,
+                          overflow: TextOverflow.ellipsis,
+                          'Copied #${currentHsvColor.toColor().toHex()}',
+                          style: GoogleFonts.anaheim().copyWith(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.grey[800]
+                                    : Colors.white,
                           ),
-                          SizedBox(width: 12.0),
-                          Text(
-                            textScaler: TextScaler.noScaling,
-                            overflow: TextOverflow.ellipsis,
-                            'Copied #${currentHsvColor.toColor().toHex()}',
-                            style: GoogleFonts.anaheim().copyWith(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? Colors.grey[800]
-                                  : Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      duration: const Duration(seconds: 2),
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        side: BorderSide(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? Colors.black12
-                                  : Colors.white10,
                         ),
-                      ),
-                      margin: EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                        bottom: MediaQuery.sizeOf(context).height * 0.8,
-                      ),
-                      elevation: 0.0,
-                      dismissDirection: DismissDirection.horizontal,
-                      backgroundColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? Colors.grey[200]
-                              : Colors.grey[850],
+                      ],
                     ),
-                  );
-                },
-              ),
-            ],
-          ),
+                    duration: const Duration(seconds: 2),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      side: BorderSide(
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.black12
+                            : Colors.white10,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      bottom: MediaQuery.sizeOf(context).height * 0.8,
+                    ),
+                    elevation: 0.0,
+                    dismissDirection: DismissDirection.horizontal,
+                    backgroundColor:
+                        Theme.of(context).brightness == Brightness.light
+                            ? Colors.grey[200]
+                            : Colors.grey[850],
+                  ),
+                );
+              },
+            ),
+          ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         ...sliders,
-        const SizedBox(height: 16.0),
       ],
     );
   }
