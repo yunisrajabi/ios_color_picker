@@ -237,53 +237,48 @@ class _SlidePickerState extends State<SlidePicker> {
                     : Colors.white,
               ),
             ),
-            Container(
-              height: 36,
-              width: 90,
-              decoration: BoxDecoration(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.white
-                    : Colors.grey.shade800,
-                borderRadius: BorderRadius.circular(100.0),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Text(
-                      '#',
-                      style: GoogleFonts.anaheim().copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue,
-                      ),
+            Expanded(
+              child: TextField(
+                contextMenuBuilder: (context, editableTextState) {
+                  return SizedBox.shrink();
+                },
+                cursorRadius: const Radius.circular(100.0),
+                controller: _hexController,
+                textAlign: TextAlign.center,
+                maxLength: 6,
+                decoration: InputDecoration(
+                  prefix: Text(
+                    textScaler: TextScaler.noScaling,
+                    overflow: TextOverflow.ellipsis,
+                    "#",
+                    style: GoogleFonts.anaheim().copyWith(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue,
                     ),
                   ),
-                  Expanded(
-                    child: TextField(
-                      contextMenuBuilder: (context, editableTextState) {
-                        return SizedBox.shrink();
-                      },
-                      cursorRadius: const Radius.circular(100.0),
-                      controller: _hexController,
-                      textAlign: TextAlign.center,
-                      maxLength: 6,
-                      decoration: const InputDecoration(
-                        counterText: '',
-                        contentPadding:
-                            EdgeInsets.only(bottom: 16.0, right: 10.0),
-                        border: InputBorder.none,
-                      ),
-                      style: GoogleFonts.anaheim().copyWith(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue,
-                      ),
-                      onChanged: _updateColorFromHex,
+                  filled: true,
+                  fillColor: Theme.of(context).brightness == Brightness.light
+                      ? Colors.white
+                      : Colors.grey.shade800,
+                  counterText: '',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(100.0),
                     ),
                   ),
-                ],
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 10.0,
+                  ),
+                ),
+                style: GoogleFonts.anaheim().copyWith(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.blue,
+                ),
+                onChanged: _updateColorFromHex,
               ),
             ),
             IconButton(
@@ -347,6 +342,133 @@ class _SlidePickerState extends State<SlidePicker> {
             ),
           ],
         ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Text(
+        //       textScaler: TextScaler.noScaling,
+        //       overflow: TextOverflow.ellipsis,
+        //       "Hex Color:  ",
+        //       style: GoogleFonts.anaheim().copyWith(
+        //         fontSize: 16,
+        //         fontWeight: FontWeight.w600,
+        //         color: Theme.of(context).brightness == Brightness.light
+        //             ? Colors.black
+        //             : Colors.white,
+        //       ),
+        //     ),
+        //     Container(
+        //       height: 36,
+        //       width: 90,
+        //       decoration: BoxDecoration(
+        //         color: Theme.of(context).brightness == Brightness.light
+        //             ? Colors.white
+        //             : Colors.grey.shade800,
+        //         borderRadius: BorderRadius.circular(100.0),
+        //       ),
+        //       child: Row(
+        //         mainAxisSize: MainAxisSize.min,
+        //         children: [
+        //           Padding(
+        //             padding: const EdgeInsets.only(left: 12.0),
+        //             child: Text(
+        //               textScaler: TextScaler.noScaling,
+        //               overflow: TextOverflow.ellipsis,
+        //               '#',
+        //               style: GoogleFonts.anaheim().copyWith(
+        //                 fontSize: 16,
+        //                 fontWeight: FontWeight.w600,
+        //                 color: Colors.blue,
+        //               ),
+        //             ),
+        //           ),
+        //           Expanded(
+        //             child: TextField(
+        //               contextMenuBuilder: (context, editableTextState) {
+        //                 return SizedBox.shrink();
+        //               },
+        //               cursorRadius: const Radius.circular(100.0),
+        //               controller: _hexController,
+        //               textAlign: TextAlign.center,
+        //               maxLength: 6,
+        //               decoration: const InputDecoration(
+        //                 counterText: '',
+        //                 contentPadding:
+        //                     EdgeInsets.only(bottom: 16.0, right: 10.0),
+        //                 border: InputBorder.none,
+        //               ),
+        //               style: GoogleFonts.anaheim().copyWith(
+        //                 fontSize: 17,
+        //                 fontWeight: FontWeight.w600,
+        //                 color: Colors.blue,
+        //               ),
+        //               onChanged: _updateColorFromHex,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     IconButton(
+        //       icon: const Icon(Icons.copy, size: 20),
+        //       onPressed: () {
+        //         Clipboard.setData(
+        //           ClipboardData(
+        //             text: currentHsvColor.toColor().toHex(),
+        //           ),
+        //         );
+        //         ScaffoldMessenger.of(context).showSnackBar(
+        //           SnackBar(
+        //             content: Row(
+        //               mainAxisAlignment: MainAxisAlignment.start,
+        //               children: [
+        //                 Icon(
+        //                   CupertinoIcons.check_mark_circled_solid,
+        //                   size: 24,
+        //                   color: Colors.green,
+        //                 ),
+        //                 SizedBox(width: 12.0),
+        //                 Text(
+        //                   textScaler: TextScaler.noScaling,
+        //                   overflow: TextOverflow.ellipsis,
+        //                   'Copied #${currentHsvColor.toColor().toHex()}',
+        //                   style: GoogleFonts.anaheim().copyWith(
+        //                     fontSize: 15,
+        //                     fontWeight: FontWeight.w600,
+        //                     color:
+        //                         Theme.of(context).brightness == Brightness.light
+        //                             ? Colors.grey[800]
+        //                             : Colors.white,
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //             duration: const Duration(seconds: 2),
+        //             behavior: SnackBarBehavior.floating,
+        //             shape: RoundedRectangleBorder(
+        //               borderRadius: BorderRadius.circular(16.0),
+        //               side: BorderSide(
+        //                 color: Theme.of(context).brightness == Brightness.light
+        //                     ? Colors.black12
+        //                     : Colors.white10,
+        //               ),
+        //             ),
+        //             margin: EdgeInsets.only(
+        //               left: 20.0,
+        //               right: 20.0,
+        //               bottom: MediaQuery.sizeOf(context).height * 0.8,
+        //             ),
+        //             elevation: 0.0,
+        //             dismissDirection: DismissDirection.horizontal,
+        //             backgroundColor:
+        //                 Theme.of(context).brightness == Brightness.light
+        //                     ? Colors.grey[200]
+        //                     : Colors.grey[850],
+        //           ),
+        //         );
+        //       },
+        //     ),
+        //   ],
+        // ),
         const SizedBox(height: 10),
         ...sliders,
       ],
