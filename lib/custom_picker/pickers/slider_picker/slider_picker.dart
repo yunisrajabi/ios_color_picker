@@ -282,7 +282,7 @@ class _SlidePickerState extends State<SlidePicker> {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.copy, size: 20),
+              icon: const Icon(Icons.copy_rounded, size: 20),
               onPressed: () {
                 Clipboard.setData(
                   ClipboardData(

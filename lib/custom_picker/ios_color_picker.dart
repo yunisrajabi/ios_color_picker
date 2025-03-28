@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_helper.dart';
@@ -90,7 +89,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                       IconButton(
                         onPressed: () => Navigator.pop(context),
                         icon: Icon(
-                          CupertinoIcons.check_mark_circled_solid,
+                          Icons.check_circle_rounded,
                           color: Theme.of(context).brightness == Brightness.dark
                               ? Colors.white70
                               : Colors.black87,
