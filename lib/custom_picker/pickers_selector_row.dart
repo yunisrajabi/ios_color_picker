@@ -104,7 +104,7 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                   width: ((maxWidth(context) - 40) / 3),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Color(0xFF0095F6),
                       //color: selectedSliderColor,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(100)),

@@ -44,7 +44,12 @@ class _IosColorPickerState extends State<IosColorPicker> {
           ),
         ),
         Container(
-          margin: EdgeInsets.all(10.0),
+          margin: EdgeInsets.fromLTRB(
+            10.0,
+            0.0,
+            10.0,
+            MediaQuery.of(context).padding.bottom * 1.25,
+          ),
           // width: maxWidth(context),
           //height: 340 + componentsHeight(context),
           decoration: BoxDecoration(
@@ -168,7 +173,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                             style: GoogleFonts.anaheim().copyWith(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: Colors.blue,
+                              color: Color(0xFF0095F6),
                             ),
                           );
                         },

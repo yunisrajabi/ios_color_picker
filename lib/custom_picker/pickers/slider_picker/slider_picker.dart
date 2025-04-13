@@ -208,7 +208,7 @@ class _SlidePickerState extends State<SlidePicker> {
                         style: GoogleFonts.anaheim().copyWith(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Colors.blue,
+                          color: Color(0xFF0095F6),
                         ),
                       ),
                     ),
@@ -269,7 +269,7 @@ class _SlidePickerState extends State<SlidePicker> {
                 style: GoogleFonts.anaheim().copyWith(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
-                  color: Colors.blue,
+                  color: Color(0xFF0095F6),
                 ),
                 onChanged: _updateColorFromHex,
               ),
