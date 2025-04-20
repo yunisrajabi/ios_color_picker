@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/pickers/area_picker.dart';
 import 'package:ios_color_picker/custom_picker/pickers/grid_picker.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_picker.dart';
@@ -139,7 +138,8 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                               textScaler: TextScaler.noScaling,
                               overflow: TextOverflow.ellipsis,
                               typeText[index],
-                              style: GoogleFonts.anaheim().copyWith(
+                              style: TextStyle(
+                                fontFamily: 'Anaheim',
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: Theme.of(context).brightness ==

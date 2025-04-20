@@ -14,13 +14,15 @@ dependencies:
   shared_preferences: ^2.4.0
   smooth_page_indicator: ^1.2.0+3
   super_tooltip: ^2.0.9
+  toastification: ^3.0.2
   
 
   flutter_web_plugins:
     sdk: flutter
   web: ^1.1.0
   plugin_platform_interface: ^2.1.8
-  google_fonts: ^6.2.1
+  
+
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +77,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Anaheim
+      fonts:
+        - asset: assets/Anaheim.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

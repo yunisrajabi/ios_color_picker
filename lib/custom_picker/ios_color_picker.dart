@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_helper.dart';
 import 'package:ios_color_picker/custom_picker/pickers_selector_row.dart';
 import 'package:ios_color_picker/custom_picker/shared.dart';
@@ -54,8 +53,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
           //height: 340 + componentsHeight(context),
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.light
-                ? Colors.grey.shade50
-                : Colors.grey.shade900,
+                ? Color(0xFFFAFAFA)
+                : Color(0xFF212121),
             borderRadius: BorderRadius.all(
               Radius.circular(20.0),
               // topRight: Radius.circular(10),
@@ -82,13 +81,14 @@ class _IosColorPickerState extends State<IosColorPicker> {
                         textScaler: TextScaler.noScaling,
                         overflow: TextOverflow.ellipsis,
                         'Color Picker',
-                        style: GoogleFonts.anaheim().copyWith(
+                        style: TextStyle(
+                          fontFamily: 'Anaheim',
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color:
                               Theme.of(context).brightness == Brightness.light
-                                  ? Colors.black87
-                                  : Colors.white70,
+                                  ? Colors.black
+                                  : Colors.white,
                         ),
                       ),
                       IconButton(
@@ -96,8 +96,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                         icon: Icon(
                           Icons.check_circle_rounded,
                           color: Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white70
-                              : Colors.black87,
+                              ? Colors.white
+                              : Colors.black,
                           size: 24,
                         ),
                       ),
@@ -118,7 +118,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     textScaler: TextScaler.noScaling,
                     overflow: TextOverflow.ellipsis,
                     'OPACITY',
-                    style: GoogleFonts.anaheim().copyWith(
+                    style: TextStyle(
+                      fontFamily: 'Anaheim',
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).brightness == Brightness.light
@@ -170,7 +171,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                             textScaler: TextScaler.noScaling,
                             overflow: TextOverflow.ellipsis,
                             "$alpha%",
-                            style: GoogleFonts.anaheim().copyWith(
+                            style: TextStyle(
+                              fontFamily: 'Anaheim',
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                               color: Color(0xFF0095F6),

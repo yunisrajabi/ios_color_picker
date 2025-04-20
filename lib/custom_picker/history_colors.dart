@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/shared.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:super_tooltip/super_tooltip.dart';
@@ -177,7 +176,8 @@ class _HistoryColorsState extends State<HistoryColors> {
                             textScaler: TextScaler.noScaling,
                             overflow: TextOverflow.ellipsis,
                             "Delete",
-                            style: GoogleFonts.anaheim().copyWith(
+                            style: TextStyle(
+                              fontFamily: 'Anaheim',
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               color: Colors.red,

@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ios_color_picker/custom_picker/extensions.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_helper.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../shared.dart';
 import '../../utils.dart';
@@ -82,7 +81,7 @@ class _SlidePickerState extends State<SlidePicker> {
   }
 
   void _updateHexController() {
-    _hexController.text = currentHsvColor.toColor().toHex();
+    _hexController.text = currentHsvColor.toColor().toHex().toUpperCase();
   }
 
   void _updateColorFromHex(String value) {
@@ -176,7 +175,8 @@ class _SlidePickerState extends State<SlidePicker> {
                   textScaler: TextScaler.noScaling,
                   overflow: TextOverflow.ellipsis,
                   trackType.toString().split('.').last.toUpperCase(),
-                  style: GoogleFonts.anaheim().copyWith(
+                  style: TextStyle(
+                    fontFamily: 'Anaheim',
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).brightness == Brightness.light
@@ -205,7 +205,8 @@ class _SlidePickerState extends State<SlidePicker> {
                         textScaler: TextScaler.noScaling,
                         overflow: TextOverflow.ellipsis,
                         getColorParams(trackTypes.indexOf(trackType)),
-                        style: GoogleFonts.anaheim().copyWith(
+                        style: TextStyle(
+                          fontFamily: 'Anaheim',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFF0095F6),
@@ -232,7 +233,8 @@ class _SlidePickerState extends State<SlidePicker> {
               textScaler: TextScaler.noScaling,
               overflow: TextOverflow.ellipsis,
               "Hex Color: #   ",
-              style: GoogleFonts.anaheim().copyWith(
+              style: TextStyle(
+                fontFamily: 'Anaheim',
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: Theme.of(context).brightness == Brightness.light
@@ -266,7 +268,8 @@ class _SlidePickerState extends State<SlidePicker> {
                     horizontal: 10.0,
                   ),
                 ),
-                style: GoogleFonts.anaheim().copyWith(
+                style: TextStyle(
+                  fontFamily: 'Anaheim',
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF0095F6),
@@ -279,57 +282,13 @@ class _SlidePickerState extends State<SlidePicker> {
               onPressed: () {
                 Clipboard.setData(
                   ClipboardData(
-                    text: currentHsvColor.toColor().toHex(),
+                    text: currentHsvColor.toColor().toHex().toUpperCase(),
                   ),
                 );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(
-                          CupertinoIcons.check_mark_circled_solid,
-                          size: 24,
-                          color: Colors.green,
-                        ),
-                        SizedBox(width: 12.0),
-                        Text(
-                          textScaler: TextScaler.noScaling,
-                          overflow: TextOverflow.ellipsis,
-                          'Copied #${currentHsvColor.toColor().toHex()}',
-                          style: GoogleFonts.anaheim().copyWith(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Colors.grey[800]
-                                    : Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    duration: const Duration(seconds: 2),
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                      side: BorderSide(
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.black12
-                            : Colors.white10,
-                      ),
-                    ),
-                    margin: EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                      bottom: MediaQuery.sizeOf(context).height * 0.8,
-                    ),
-                    elevation: 0.0,
-                    dismissDirection: DismissDirection.horizontal,
-                    backgroundColor:
-                        Theme.of(context).brightness == Brightness.light
-                            ? Colors.grey[200]
-                            : Colors.grey[850],
-                  ),
+                SnackBarHelper.show(
+                  context,
+                  'Copied #${currentHsvColor.toColor().toHex().toUpperCase()}',
+                  messageType: MessageType.success,
                 );
               },
             ),
@@ -339,5 +298,82 @@ class _SlidePickerState extends State<SlidePicker> {
         ...sliders,
       ],
     );
+  }
+}
+
+enum MessageType { success, error, warning }
+
+class SnackBarHelper {
+  static void show(BuildContext context, String message,
+      {MessageType messageType = MessageType.success, bool showIcon = true}) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!context.mounted) return;
+
+      ToastificationType toastType;
+      IconData icon;
+      Color? iconColor;
+
+      switch (messageType) {
+        case MessageType.success:
+          toastType = ToastificationType.success;
+          icon = Icons.check_circle_rounded;
+          iconColor = Colors.green;
+          break;
+        case MessageType.error:
+          toastType = ToastificationType.error;
+          icon = Icons.cancel_rounded;
+          iconColor = Color(0xFFF44336);
+          break;
+        case MessageType.warning:
+          toastType = ToastificationType.warning;
+          icon = Icons.error_rounded;
+          iconColor = Color(0xFFEAB002);
+          break;
+      }
+
+      toastification.show(
+        alignment: Alignment.center,
+        borderRadius: BorderRadius.circular(20.0),
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? Color(0xFFFAFAFA)
+            : Color(0xFF212121),
+        context: context,
+        description: Text(
+          message,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          textScaler: TextScaler.noScaling,
+          style: TextStyle(
+            fontFamily: 'Anaheim',
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey[800]
+                : Colors.white,
+          ),
+        ),
+        borderSide: BorderSide(color: iconColor, width: 0.5),
+        icon: Icon(icon, size: 30.0, color: iconColor),
+        showIcon: true,
+        style: ToastificationStyle.flat,
+        dismissDirection: DismissDirection.horizontal,
+        closeButton: ToastCloseButton(
+          showType: CloseButtonShowType.none,
+        ),
+        autoCloseDuration: Duration(seconds: 3),
+        margin: EdgeInsets.fromLTRB(
+          20.0,
+          0.0,
+          20.0,
+          MediaQuery.sizeOf(context).height * 0.75,
+        ),
+        type: toastType,
+        showProgressBar: true,
+        progressBarTheme: ProgressIndicatorThemeData(
+          color: iconColor,
+          linearTrackColor: iconColor.withValues(alpha: 0.1),
+        ),
+      );
+    });
   }
 }
