@@ -196,10 +196,10 @@ class _SlidePickerState extends State<SlidePicker> {
                       margin: const EdgeInsets.only(left: 28),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? Colors.white
-                                  : Colors.grey.shade800,
+                          color: Colors.transparent,
+                          // Theme.of(context).brightness == Brightness.light
+                          //     ? Colors.white
+                          //     : Colors.grey.shade800,
                           borderRadius: BorderRadius.all(Radius.circular(100))),
                       child: Text(
                         textScaler: TextScaler.noScaling,
@@ -255,10 +255,16 @@ class _SlidePickerState extends State<SlidePicker> {
                   filled: true,
                   fillColor: Theme.of(context).brightness == Brightness.light
                       ? Colors.white
-                      : Colors.grey.shade800,
+                      : Color(0xFF303030),
                   counterText: '',
-                  border: OutlineInputBorder(
+                  enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(100.0),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF0095F6)),
                     borderRadius: BorderRadius.all(
                       Radius.circular(100.0),
                     ),
@@ -345,10 +351,10 @@ class SnackBarHelper {
           textScaler: TextScaler.noScaling,
           style: TextStyle(
             fontFamily: 'Anaheim',
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
+            fontSize: 17.0,
+            fontWeight: FontWeight.bold,
             color: Theme.of(context).brightness == Brightness.light
-                ? Colors.grey[800]
+                ? Colors.black
                 : Colors.white,
           ),
         ),
