@@ -214,7 +214,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                   endIndent: 18,
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 20.0),
+                  padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -237,7 +237,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                             'Cancel',
                             style: TextStyle(
                               fontFamily: 'Anaheim',
-                              fontSize: 17,
+                              fontSize: 18,
                               fontWeight: FontWeight.w600,
                               color: Theme.of(context).brightness ==
                                       Brightness.light
@@ -280,7 +280,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                             'Done',
                             style: TextStyle(
                               fontFamily: 'Anaheim',
-                              fontSize: 17,
+                              fontSize: 18,
                               fontWeight: FontWeight.w600,
                               color: Theme.of(context).brightness ==
                                       Brightness.light

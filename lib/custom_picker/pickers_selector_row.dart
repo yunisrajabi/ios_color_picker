@@ -140,7 +140,7 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                               typeText[index],
                               style: TextStyle(
                                 fontFamily: 'Anaheim',
-                                fontSize: 15,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: Theme.of(context).brightness ==
                                         Brightness.light
