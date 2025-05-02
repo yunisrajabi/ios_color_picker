@@ -88,7 +88,7 @@ class _HistoryColorsState extends State<HistoryColors> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 90,
+      height: 80,
       width: maxWidth(context) - 130,
       child: Column(
         children: [
@@ -121,10 +121,11 @@ class _HistoryColorsState extends State<HistoryColors> {
                         },
                         child: ConstrainedBox(
                           constraints: const BoxConstraints(
-                              minHeight: 30,
-                              minWidth: 30,
-                              maxWidth: 30,
-                              maxHeight: 30),
+                            minHeight: 30,
+                            minWidth: 30,
+                            maxWidth: 30,
+                            maxHeight: 30,
+                          ),
                           child: Container(
                             height: 30,
                             width: 30,
@@ -199,13 +200,14 @@ class _HistoryColorsState extends State<HistoryColors> {
                           children: [
                             ConstrainedBox(
                               constraints: const BoxConstraints(
-                                  minHeight: 30,
-                                  minWidth: 30,
-                                  maxWidth: 30,
-                                  maxHeight: 30),
+                                minHeight: 28,
+                                minWidth: 28,
+                                maxWidth: 28,
+                                maxHeight: 28,
+                              ),
                               child: Container(
-                                height: 30,
-                                width: 30,
+                                height: 28,
+                                width: 28,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color:
@@ -217,8 +219,8 @@ class _HistoryColorsState extends State<HistoryColors> {
                                 historyColors[(index + (pageIndex * 10))]
                                     .toHex())
                               Container(
-                                height: 24,
-                                width: 24,
+                                height: 22,
+                                width: 22,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(

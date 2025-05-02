@@ -252,7 +252,7 @@ class _SlidePickerState extends State<SlidePicker> {
                 textAlign: TextAlign.center,
                 maxLength: 7,
                 decoration: InputDecoration(
-                  filled: true,
+                  filled: false,
                   fillColor: Theme.of(context).brightness == Brightness.light
                       ? Colors.white
                       : Color(0xFF303030),
