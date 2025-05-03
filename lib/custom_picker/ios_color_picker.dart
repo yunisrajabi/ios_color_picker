@@ -143,22 +143,20 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     )
                   ],
                 ),
-                const SizedBox(height: 30.0),
+                const SizedBox(height: 20.0),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Stack(
                       children: [
                         Container(
-                          height: 64,
-                          width: 64,
+                          height: 40,
+                          width: 40,
                           clipBehavior: Clip.antiAliasWithSaveLayer,
-                          margin: const EdgeInsets.only(
-                            left: 16,
-                          ),
+                          margin: const EdgeInsets.only(left: 18),
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(10),
+                              Radius.circular(8),
                             ),
                           ),
                           child: Transform.scale(
@@ -168,10 +166,14 @@ class _IosColorPickerState extends State<IosColorPicker> {
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: Container(color: Colors.white),
+                                    child: Container(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                   Expanded(
-                                    child: Container(color: Colors.black),
+                                    child: Container(
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -182,12 +184,12 @@ class _IosColorPickerState extends State<IosColorPicker> {
                           valueListenable: colorController,
                           builder: (context, color, child) {
                             return Container(
-                              height: 64,
-                              width: 64,
-                              margin: const EdgeInsets.only(left: 16),
+                              height: 40,
+                              width: 40,
+                              margin: const EdgeInsets.only(left: 18),
                               decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.all(
-                                  Radius.circular(10),
+                                  Radius.circular(8),
                                 ),
                                 color: _tempColor,
                               ),
@@ -205,6 +207,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     )
                   ],
                 ),
+                const SizedBox(height: 10.0),
                 Divider(
                   color: Theme.of(context).brightness == Brightness.light
                       ? Colors.black38
