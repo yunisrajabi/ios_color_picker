@@ -165,12 +165,12 @@ class _SlidePickerState extends State<SlidePicker> {
     List<SizedBox> sliders = [
       for (TrackType trackType in trackTypes)
         SizedBox(
-          height: 60,
+          height: MediaQuery.of(context).size.height * 0.075,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Text(
                   textScaler: TextScaler.noScaling,
                   overflow: TextOverflow.ellipsis,
@@ -193,7 +193,7 @@ class _SlidePickerState extends State<SlidePicker> {
                     Container(
                       height: 25,
                       width: 60,
-                      margin: const EdgeInsets.only(left: 28),
+                      margin: const EdgeInsets.only(left: 20),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: Colors.transparent,
@@ -229,17 +229,20 @@ class _SlidePickerState extends State<SlidePicker> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              textScaler: TextScaler.noScaling,
-              overflow: TextOverflow.ellipsis,
-              "Hex Color: #   ",
-              style: TextStyle(
-                fontFamily: 'Anaheim',
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.black
-                    : Colors.white,
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: Text(
+                textScaler: TextScaler.noScaling,
+                overflow: TextOverflow.ellipsis,
+                "Hex Color:   ",
+                style: TextStyle(
+                  fontFamily: 'Anaheim',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.black
+                      : Colors.white,
+                ),
               ),
             ),
             Expanded(

@@ -95,25 +95,43 @@ class _HistoryColorsState extends State<HistoryColors> {
         itemCount: historyColors.length + 1,
         itemBuilder: (context, index) {
           if (index == historyColors.length) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: InkWell(
-                onTap: () {
-                  historyColors.add(colorController.value);
-                  setHistory();
-                },
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white.withOpacity(0.16),
-                  ),
-                  child:
-                      const Icon(Icons.add, color: Color(0xffB0B0BD), size: 20),
-                ),
+            return IconButton(
+              onPressed: () {
+                historyColors.add(colorController.value);
+                setHistory();
+              },
+              icon: const Icon(
+                Icons.add,
+                color: Colors.black54,
+                size: 24,
               ),
             );
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 5),
+            //   child: InkWell(
+            //     onTap: () {
+            //       historyColors.add(colorController.value);
+            //       setHistory();
+            //     },
+            //     child: Container(
+            //       height: 40,
+            //       width: 40,
+            //       decoration: BoxDecoration(
+            //         shape: BoxShape.circle,
+            //         color: Colors.white.withOpacity(0.16),
+            //         border: Border.all(
+            //           color: const Color(0xffB0B0BD),
+            //           width: 1.5,
+            //         ),
+            //       ),
+            //       child: const Icon(
+            //         Icons.add,
+            //         color: Color(0xffB0B0BD),
+            //         size: 20,
+            //       ),
+            //     ),
+            //   ),
+            //);
           }
 
           return Padding(
@@ -143,7 +161,10 @@ class _HistoryColorsState extends State<HistoryColors> {
                   setHistory(delete: true);
                 },
                 child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  padding: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 12,
+                  ),
                   child: Text(
                     "Delete",
                     style: TextStyle(
