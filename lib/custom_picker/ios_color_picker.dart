@@ -135,7 +135,10 @@ class _IosColorPickerState extends State<IosColorPicker> {
                               fontFamily: 'Anaheim',
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF0095F6),
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Color(0xFF0095F6)
+                                  : Color(0xFF61B5FA),
                             ),
                           );
                         },

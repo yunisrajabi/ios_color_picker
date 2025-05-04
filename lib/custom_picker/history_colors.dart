@@ -100,9 +100,11 @@ class _HistoryColorsState extends State<HistoryColors> {
                 historyColors.add(colorController.value);
                 setHistory();
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.add,
-                color: Colors.black54,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black54
+                    : Colors.grey.shade800,
                 size: 24,
               ),
             );

@@ -209,7 +209,10 @@ class _SlidePickerState extends State<SlidePicker> {
                           fontFamily: 'Anaheim',
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF0095F6),
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Color(0xFF0095F6)
+                                  : Color(0xFF61B5FA),
                         ),
                       ),
                     ),
@@ -281,7 +284,9 @@ class _SlidePickerState extends State<SlidePicker> {
                   fontFamily: 'Anaheim',
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF0095F6),
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Color(0xFF0095F6)
+                      : Color(0xFF61B5FA),
                 ),
                 onChanged: _updateColorFromHex,
               ),
@@ -369,7 +374,7 @@ class SnackBarHelper {
           20.0,
           0.0,
           20.0,
-          MediaQuery.sizeOf(context).height * 0.78,
+          MediaQuery.sizeOf(context).height * 0.77,
         ),
         type: toastType,
         showProgressBar: true,
