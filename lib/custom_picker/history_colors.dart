@@ -104,7 +104,7 @@ class _HistoryColorsState extends State<HistoryColors> {
                 Icons.add,
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.black54
-                    : Colors.grey.shade800,
+                    : Colors.grey.shade400,
                 size: 24,
               ),
             );
