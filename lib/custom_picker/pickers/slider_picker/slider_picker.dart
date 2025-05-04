@@ -81,11 +81,11 @@ class _SlidePickerState extends State<SlidePicker> {
   }
 
   void _updateHexController() {
-    _hexController.text = currentHsvColor.toColor().toHex().toUpperCase();
+    _hexController.text = '#${currentHsvColor.toColor().toHex().toUpperCase()}';
   }
 
   void _updateColorFromHex(String value) {
-    // Remove '#' if present
+    // Ensure '#' is always present
     final hexCode = value.startsWith('#') ? value.substring(1) : value;
 
     if (hexCode.length == 6) {
@@ -98,6 +98,14 @@ class _SlidePickerState extends State<SlidePicker> {
       } catch (e) {
         // Invalid hex code
       }
+    }
+
+    // Update the text field to include '#'
+    if (!value.startsWith('#')) {
+      _hexController.text = '#$value';
+      _hexController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _hexController.text.length),
+      );
     }
   }
 
@@ -237,7 +245,7 @@ class _SlidePickerState extends State<SlidePicker> {
               child: Text(
                 textScaler: TextScaler.noScaling,
                 overflow: TextOverflow.ellipsis,
-                "Hex Color:   ",
+                "Hex Color:  ",
                 style: TextStyle(
                   fontFamily: 'Anaheim',
                   fontSize: 16,
@@ -289,6 +297,10 @@ class _SlidePickerState extends State<SlidePicker> {
                       : Color(0xFF61B5FA),
                 ),
                 onChanged: _updateColorFromHex,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^#?[0-9A-Fa-f]*$')),
+                ],
               ),
             ),
             IconButton(
