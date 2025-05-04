@@ -342,10 +342,7 @@ class SnackBarHelper {
 
       toastification.show(
         alignment: Alignment.center,
-        borderRadius: BorderRadius.circular(20.0),
-        backgroundColor: Theme.of(context).brightness == Brightness.light
-            ? Color(0xFFFAFAFA)
-            : Color(0xFF212121),
+        borderRadius: BorderRadius.circular(16.0),
         context: context,
         description: Text(
           message,
@@ -356,9 +353,7 @@ class SnackBarHelper {
             fontFamily: 'Anaheim',
             fontSize: 17.0,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).brightness == Brightness.light
-                ? Colors.black
-                : Colors.white,
+            color: Color(0xFF212121),
           ),
         ),
         borderSide: BorderSide(color: iconColor, width: 0.3),
@@ -374,7 +369,7 @@ class SnackBarHelper {
           20.0,
           0.0,
           20.0,
-          MediaQuery.sizeOf(context).height * 0.75,
+          MediaQuery.sizeOf(context).height * 0.78,
         ),
         type: toastType,
         showProgressBar: true,
