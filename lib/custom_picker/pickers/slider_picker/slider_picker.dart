@@ -361,10 +361,10 @@ class SnackBarHelper {
                 : Colors.white,
           ),
         ),
-        borderSide: BorderSide(color: iconColor, width: 0.5),
+        borderSide: BorderSide(color: iconColor, width: 0.3),
         icon: Icon(icon, size: 30.0, color: iconColor),
         showIcon: true,
-        style: ToastificationStyle.flat,
+        style: ToastificationStyle.flatColored,
         dismissDirection: DismissDirection.horizontal,
         closeButton: ToastCloseButton(
           showType: CloseButtonShowType.none,
@@ -381,6 +381,7 @@ class SnackBarHelper {
         progressBarTheme: ProgressIndicatorThemeData(
           color: iconColor,
           linearTrackColor: iconColor.withValues(alpha: 0.1),
+          linearMinHeight: 1.0,
         ),
       );
     });
