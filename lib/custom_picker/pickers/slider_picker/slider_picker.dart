@@ -358,7 +358,6 @@ class SnackBarHelper {
       }
 
       toastification.show(
-        alignment: Alignment.center,
         borderRadius: BorderRadius.circular(16.0),
         context: context,
         description: Text(
@@ -382,12 +381,8 @@ class SnackBarHelper {
           showType: CloseButtonShowType.none,
         ),
         autoCloseDuration: Duration(seconds: 3),
-        margin: EdgeInsets.fromLTRB(
-          20.0,
-          0.0,
-          20.0,
-          MediaQuery.sizeOf(context).height * 0.77,
-        ),
+        alignment: Alignment.topCenter,
+        margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
         type: toastType,
         showProgressBar: true,
         progressBarTheme: ProgressIndicatorThemeData(
