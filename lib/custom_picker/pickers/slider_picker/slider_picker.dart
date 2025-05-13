@@ -257,50 +257,53 @@ class _SlidePickerState extends State<SlidePicker> {
               ),
             ),
             Expanded(
-              child: TextField(
-                contextMenuBuilder: (context, editableTextState) {
-                  return SizedBox.shrink();
-                },
-                cursorRadius: const Radius.circular(100.0),
-                controller: _hexController,
-                textAlign: TextAlign.center,
-                maxLength: 7,
-                decoration: InputDecoration(
-                  filled: false,
-                  fillColor: Theme.of(context).brightness == Brightness.light
-                      ? Colors.white
-                      : Color(0xFF303030),
-                  counterText: '',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(100.0),
+              child: SizedBox(
+                height: 68,
+                child: TextField(
+                  contextMenuBuilder: (context, editableTextState) {
+                    return SizedBox.shrink();
+                  },
+                  cursorRadius: const Radius.circular(100.0),
+                  controller: _hexController,
+                  textAlign: TextAlign.center,
+                  maxLength: 7,
+                  decoration: InputDecoration(
+                    filled: false,
+                    fillColor: Theme.of(context).brightness == Brightness.light
+                        ? Colors.white
+                        : Color(0xFF303030),
+                    counterText: '',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(100.0),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0095F6)),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(100.0),
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 10.0,
+                      horizontal: 10.0,
                     ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF0095F6)),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(100.0),
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'Anaheim',
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Color(0xFF0095F6)
+                        : Color(0xFF61B5FA),
                   ),
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 10.0,
-                  ),
+                  onChanged: _updateColorFromHex,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'^#?[0-9A-Fa-f]*$')),
+                  ],
                 ),
-                style: TextStyle(
-                  fontFamily: 'Anaheim',
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Color(0xFF0095F6)
-                      : Color(0xFF61B5FA),
-                ),
-                onChanged: _updateColorFromHex,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(r'^#?[0-9A-Fa-f]*$')),
-                ],
               ),
             ),
             IconButton(
