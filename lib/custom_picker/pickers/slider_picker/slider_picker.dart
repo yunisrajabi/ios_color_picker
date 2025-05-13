@@ -237,28 +237,28 @@ class _SlidePickerState extends State<SlidePicker> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!widget.showIndicator) const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Text(
-                textScaler: TextScaler.noScaling,
-                overflow: TextOverflow.ellipsis,
-                "Hex Color:  ",
-                style: TextStyle(
-                  fontFamily: 'Anaheim',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.black
-                      : Colors.white,
+        SizedBox(
+          height: 68,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: Text(
+                  textScaler: TextScaler.noScaling,
+                  overflow: TextOverflow.ellipsis,
+                  "Hex Color:  ",
+                  style: TextStyle(
+                    fontFamily: 'Anaheim',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: SizedBox(
-                height: 68,
+              Expanded(
                 child: TextField(
                   contextMenuBuilder: (context, editableTextState) {
                     return SizedBox.shrink();
@@ -305,23 +305,23 @@ class _SlidePickerState extends State<SlidePicker> {
                   ],
                 ),
               ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.copy_rounded, size: 20),
-              onPressed: () {
-                Clipboard.setData(
-                  ClipboardData(
-                    text: currentHsvColor.toColor().toHex().toUpperCase(),
-                  ),
-                );
-                SnackBarHelper.show(
-                  context,
-                  'Copied #${currentHsvColor.toColor().toHex().toUpperCase()}',
-                  messageType: MessageType.success,
-                );
-              },
-            ),
-          ],
+              IconButton(
+                icon: const Icon(Icons.copy_rounded, size: 20),
+                onPressed: () {
+                  Clipboard.setData(
+                    ClipboardData(
+                      text: currentHsvColor.toColor().toHex().toUpperCase(),
+                    ),
+                  );
+                  SnackBarHelper.show(
+                    context,
+                    'Copied #${currentHsvColor.toColor().toHex().toUpperCase()}',
+                    messageType: MessageType.success,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 10),
         ...sliders,
