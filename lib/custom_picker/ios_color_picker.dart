@@ -93,12 +93,13 @@ class _IosColorPickerState extends State<IosColorPicker> {
                 //SizedBox(height: 10.0),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        padding: const EdgeInsets.only(left: 14.0, right: 5.0),
                         child: SizedBox(
-                          height: 24,
+                          height: 22,
                           width: 60,
                           child: ValueListenableBuilder<Color>(
                             valueListenable: colorController,
@@ -116,7 +117,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                       ),
                     ),
                     Container(
-                      height: 27,
+                      height: 25,
                       width: 60,
                       margin: const EdgeInsets.only(right: 16, left: 16),
                       alignment: Alignment.center,
@@ -210,7 +211,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     )
                   ],
                 ),
-                const SizedBox(height: 5.0),
+                const SizedBox(height: 10.0),
                 Divider(
                   color: Theme.of(context).brightness == Brightness.light
                       ? Colors.black38
