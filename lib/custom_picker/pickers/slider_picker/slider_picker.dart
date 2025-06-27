@@ -361,7 +361,7 @@ class SnackBarHelper {
       }
 
       toastification.show(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(20.0),
         context: context,
         description: Text(
           message,
