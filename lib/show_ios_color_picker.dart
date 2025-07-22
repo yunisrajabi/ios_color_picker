@@ -58,6 +58,11 @@ class IOSColorPickerController {
   }) async {
     colorController = ColorController(startingColor ?? selectedColor);
     return showModalBottomSheet(
+        sheetAnimationStyle: AnimationStyle(
+          duration: Duration(milliseconds: 400),
+          reverseDuration: Duration(milliseconds: 400),
+          curve: Curves.linearToEaseOut,
+        ),
         backgroundColor: Colors.transparent,
         barrierColor: Colors.black12,
         isScrollControlled: true,
