@@ -98,9 +98,9 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                     : typeIndex == 1
                         ? Alignment.center
                         : Alignment.centerRight,
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 300),
                 child: Container(
-                  width: ((maxWidth(context) - 40) / 3),
+                  width: maxWidth(context) * 0.25,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Color(0xFF0095F6),
