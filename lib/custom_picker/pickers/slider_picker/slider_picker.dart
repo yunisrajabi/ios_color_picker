@@ -201,7 +201,7 @@ class _SlidePickerState extends State<SlidePicker> {
                     Container(
                       height: 25,
                       width: 60,
-                      margin: const EdgeInsets.only(left: 20),
+                      margin: const EdgeInsets.only(left: 14),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: Colors.transparent,

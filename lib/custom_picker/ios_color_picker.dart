@@ -64,7 +64,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
             child: Column(
               children: [
                 SizedBox(height: 20.0),
-                PickersSelectorRow(
+                PickersSelectorTabView(
                   onColorChanged: (color) {
                     setState(() {
                       _tempColor = color;
@@ -96,7 +96,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 0.0),
+                        padding: const EdgeInsets.only(left: 10.0),
                         child: SizedBox(
                           height: 24,
                           width: 60,
@@ -118,7 +118,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     Container(
                       height: 27,
                       width: 60,
-                      margin: const EdgeInsets.only(right: 16, left: 16),
+                      margin: const EdgeInsets.only(right: 14, left: 14),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: Colors.transparent,
@@ -216,11 +216,11 @@ class _IosColorPickerState extends State<IosColorPicker> {
                       ? Colors.black38
                       : Colors.white54,
                   thickness: 0.2,
-                  indent: 16,
-                  endIndent: 16,
+                  indent: 18,
+                  endIndent: 18,
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+                  padding: const EdgeInsets.fromLTRB(14.0, 0.0, 10.0, 14.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

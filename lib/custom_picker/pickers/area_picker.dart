@@ -77,9 +77,9 @@ class _AreaColorPickerState extends State<AreaColorPicker> {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-            left: 10.0,
-            right: 10.0,
-            top: 16.0,
+            left: 14.0,
+            right: 14.0,
+            top: 16,
           ),
           child: SizedBox(
             width: double.infinity,
