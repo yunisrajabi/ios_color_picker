@@ -96,7 +96,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        padding: const EdgeInsets.only(left: 8.0, right: 0.0),
                         child: SizedBox(
                           height: 24,
                           width: 60,
@@ -216,8 +216,8 @@ class _IosColorPickerState extends State<IosColorPicker> {
                       ? Colors.black38
                       : Colors.white54,
                   thickness: 0.2,
-                  indent: 18,
-                  endIndent: 18,
+                  indent: 16,
+                  endIndent: 16,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),

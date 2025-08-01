@@ -15,9 +15,9 @@ class GridPicker extends StatelessWidget {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       alignment: Alignment.topCenter,
       margin: const EdgeInsets.fromLTRB(
+        10,
         16,
-        16,
-        16,
+        10,
         17,
       ),
       width: double.infinity,

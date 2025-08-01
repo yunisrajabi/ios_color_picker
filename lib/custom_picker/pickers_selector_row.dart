@@ -45,8 +45,8 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
       children: [
         Container(
           height: 40,
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.all(2),
+          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.all(2.0),
           width: double.infinity,
           decoration: BoxDecoration(
             boxShadow: [
@@ -200,7 +200,7 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
             clipBehavior: Clip.antiAliasWithSaveLayer,
             alignment: Alignment.topCenter,
             margin:
-                const EdgeInsets.only(top: 16, right: 16, left: 16, bottom: 17),
+                const EdgeInsets.only(top: 16, right: 10, left: 10, bottom: 17),
             width: double.infinity,
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(8))),
