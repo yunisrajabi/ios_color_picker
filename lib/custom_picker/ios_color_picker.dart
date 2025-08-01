@@ -47,9 +47,9 @@ class _IosColorPickerState extends State<IosColorPicker> {
         ),
         Container(
           margin: EdgeInsets.fromLTRB(
-            10.0,
+            20.0,
             0.0,
-            10.0,
+            20.0,
             MediaQuery.of(context).padding.bottom * 1.25,
           ),
           decoration: BoxDecoration(
