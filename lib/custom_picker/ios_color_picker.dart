@@ -222,7 +222,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                 //   endIndent: 18,
                 // ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(14.0, 0.0, 10.0, 14.0),
+                  padding: const EdgeInsets.fromLTRB(14.0, 0.0, 10.0, 10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
