@@ -383,7 +383,7 @@ class SnackBarHelper {
         closeButton: ToastCloseButton(
           showType: CloseButtonShowType.none,
         ),
-        autoCloseDuration: Duration(seconds: 3),
+        autoCloseDuration: Duration(seconds: 2),
         alignment: Alignment.topCenter,
         margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
         type: toastType,

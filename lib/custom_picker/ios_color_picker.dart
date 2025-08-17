@@ -108,6 +108,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                                   small: false, (v) {
                                 setState(() {
                                   _tempColor = v.toColor();
+                                  colorController.value = _tempColor;
                                 });
                               });
                             },
@@ -213,9 +214,9 @@ class _IosColorPickerState extends State<IosColorPicker> {
                 const SizedBox(height: 10.0),
                 Divider(
                   color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.black38
-                      : Colors.white54,
-                  thickness: 0.2,
+                      ? Colors.black26
+                      : Colors.white38,
+                  thickness: 0.5,
                   indent: 18,
                   endIndent: 18,
                 ),
