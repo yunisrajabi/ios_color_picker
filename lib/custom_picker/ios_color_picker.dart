@@ -211,11 +211,12 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     )
                   ],
                 ),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 14.0),
                 Divider(
                   color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.black26
-                      : Colors.white38,
+                      ? Colors.black12
+                      : Colors.white10,
+                  height: 0.0,
                   thickness: 0.5,
                   indent: 18,
                   endIndent: 18,
