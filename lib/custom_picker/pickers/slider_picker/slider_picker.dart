@@ -387,7 +387,8 @@ class SnackBarHelper {
         alignment: Alignment.topCenter,
         margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
         type: toastType,
-        showProgressBar: true,
+        dragToClose: true,
+        showProgressBar: false,
         progressBarTheme: ProgressIndicatorThemeData(
           color: iconColor,
           linearTrackColor: iconColor.withValues(alpha: 0.1),
