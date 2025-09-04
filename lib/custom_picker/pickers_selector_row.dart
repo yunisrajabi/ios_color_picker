@@ -151,13 +151,13 @@ class _PickersSelectorTabViewState extends State<PickersSelectorTabView>
             ),
             labelStyle: const TextStyle(
               fontFamily: 'Anaheim',
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+              fontSize: 17,
+              fontWeight: FontWeight.w800,
             ),
             unselectedLabelStyle: const TextStyle(
               fontFamily: 'Anaheim',
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+              fontSize: 17,
+              fontWeight: FontWeight.w800,
             ),
             labelColor: Colors.white,
             unselectedLabelColor: isLight ? Colors.black : Colors.white,
