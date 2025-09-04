@@ -62,6 +62,7 @@ class IOSColorPickerController {
           duration: Duration(milliseconds: 400),
           reverseDuration: Duration(milliseconds: 400),
           curve: Curves.linearToEaseOut,
+          reverseCurve: Curves.linearToEaseOut,
         ),
         backgroundColor: Colors.transparent,
         barrierColor: Colors.black12,
