@@ -65,7 +65,7 @@ class IOSColorPickerController {
           reverseCurve: Curves.linearToEaseOut,
         ),
         backgroundColor: Colors.transparent,
-        barrierColor: Colors.black12,
+        barrierColor: Colors.transparent,
         isScrollControlled: true,
         context: context,
         builder: (context) {
