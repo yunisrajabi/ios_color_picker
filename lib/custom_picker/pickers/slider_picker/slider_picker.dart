@@ -440,7 +440,7 @@ class SnackBarHelper {
                               textScaler: TextScaler.noScaling,
                               style: TextStyle(
                                 fontFamily: 'Anaheim',
-                                fontSize: 17.0,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF212121),
                               ),
