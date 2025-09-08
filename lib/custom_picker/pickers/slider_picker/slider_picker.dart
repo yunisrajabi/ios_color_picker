@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ios_color_picker/custom_picker/extensions.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_helper.dart';
-import 'package:toastification/toastification.dart';
 
 import '../../shared.dart';
 import '../../utils.dart';
@@ -330,71 +329,145 @@ class _SlidePickerState extends State<SlidePicker> {
   }
 }
 
-enum MessageType { success, error, warning }
+enum MessageType { success, error, info }
 
 class SnackBarHelper {
   static void show(BuildContext context, String message,
       {MessageType messageType = MessageType.success, bool showIcon = true}) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!context.mounted) return;
+    IconData icon;
+    Color iconColor;
+    Color bgColor = Color(0xFFFFFFFF);
 
-      ToastificationType toastType;
-      IconData icon;
-      Color? iconColor;
+    switch (messageType) {
+      case MessageType.success:
+        icon = Icons.check_circle_rounded;
+        iconColor = Color(0xFF01B001);
+        bgColor = Color.alphaBlend(
+          Color(0xFF01B001).withValues(alpha: 0.1),
+          bgColor,
+        );
+        break;
+      case MessageType.error:
+        icon = Icons.cancel_rounded;
+        iconColor = Color(0xFFF44336);
+        bgColor = Color.alphaBlend(
+          Color(0xFFF44336).withValues(alpha: 0.1),
+          bgColor,
+        );
+        break;
+      case MessageType.info:
+        icon = Icons.error_rounded;
+        iconColor = Color(0xFFEAB002);
+        bgColor = Color.alphaBlend(
+          Color(0xFFEAB002).withValues(alpha: 0.1),
+          bgColor,
+        );
+        break;
+    }
 
-      switch (messageType) {
-        case MessageType.success:
-          toastType = ToastificationType.success;
-          icon = Icons.check_circle_rounded;
-          iconColor = Colors.green;
-          break;
-        case MessageType.error:
-          toastType = ToastificationType.error;
-          icon = Icons.cancel_rounded;
-          iconColor = Color(0xFFF44336);
-          break;
-        case MessageType.warning:
-          toastType = ToastificationType.warning;
-          icon = Icons.error_rounded;
-          iconColor = Color(0xFFEAB002);
-          break;
-      }
+    late OverlayEntry overlay;
+    final animationController = AnimationController(
+      vsync: Navigator.of(context),
+      duration: const Duration(milliseconds: 300),
+      reverseDuration: const Duration(milliseconds: 200),
+    );
 
-      toastification.show(
-        borderRadius: BorderRadius.circular(20.0),
-        context: context,
-        description: Text(
-          message,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          textScaler: TextScaler.noScaling,
-          style: TextStyle(
-            fontFamily: 'Anaheim',
-            fontSize: 17.0,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF212121),
+    final slideAnimation = Tween<Offset>(
+      begin: const Offset(0, -1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: animationController,
+      curve: Curves.linearToEaseOut,
+      reverseCurve: Curves.linearToEaseOut,
+    ));
+
+    overlay = OverlayEntry(
+      builder: (context) {
+        return SafeArea(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: FadeTransition(
+              opacity: animationController,
+              child: SlideTransition(
+                position: slideAnimation,
+                child: Dismissible(
+                  key: UniqueKey(),
+                  direction: DismissDirection.horizontal,
+                  onDismissed: (_) async {
+                    await animationController.reverse();
+                    overlay.remove();
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                      decoration: BoxDecoration(
+                        color: bgColor,
+                        border: Border.all(
+                          color: iconColor,
+                          width: 0.5,
+                        ),
+                        borderRadius: BorderRadius.circular(18.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).dividerColor,
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (showIcon)
+                            Icon(
+                              icon,
+                              color: iconColor,
+                              size: 28,
+                            ),
+                          const SizedBox(width: 8.0),
+                          Expanded(
+                            child: Text(
+                              message,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textScaler: TextScaler.noScaling,
+                              style: TextStyle(
+                                fontFamily: 'Anaheim',
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF212121),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
-        borderSide: BorderSide(color: iconColor, width: 0.3),
-        icon: Icon(icon, size: 30.0, color: iconColor),
-        showIcon: true,
-        style: ToastificationStyle.flatColored,
-        dismissDirection: DismissDirection.horizontal,
-        closeButton: ToastCloseButton(
-          showType: CloseButtonShowType.none,
-        ),
-        autoCloseDuration: Duration(seconds: 2),
-        alignment: Alignment.topCenter,
-        margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-        type: toastType,
-        dragToClose: true,
-        showProgressBar: false,
-        progressBarTheme: ProgressIndicatorThemeData(
-          color: iconColor,
-          linearTrackColor: iconColor.withValues(alpha: 0.1),
-          linearMinHeight: 1.0,
-        ),
-      );
+        );
+      },
+    );
+
+    Overlay.of(context).insert(overlay);
+    animationController.forward();
+
+    // بعد از 3 ثانیه خودکار بسته میشه
+    Future.delayed(const Duration(seconds: 3), () async {
+      if (animationController.status == AnimationStatus.forward ||
+          animationController.status == AnimationStatus.completed) {
+        await animationController.reverse();
+        overlay.remove();
+      }
     });
   }
 }
