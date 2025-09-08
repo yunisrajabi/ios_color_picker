@@ -401,13 +401,10 @@ class SnackBarHelper {
                     color: Colors.transparent,
                     child: Container(
                       margin: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 10,
+                        horizontal: 20.0,
+                        vertical: 10.0,
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
+                      padding: const EdgeInsets.all(14.0),
                       decoration: BoxDecoration(
                         color: bgColor,
                         border: Border.all(
@@ -418,7 +415,7 @@ class SnackBarHelper {
                         boxShadow: [
                           BoxShadow(
                             color: Theme.of(context).dividerColor,
-                            blurRadius: 10,
+                            blurRadius: 10.0,
                           ),
                         ],
                       ),
@@ -429,9 +426,9 @@ class SnackBarHelper {
                             Icon(
                               icon,
                               color: iconColor,
-                              size: 28,
+                              size: 26.0,
                             ),
-                          const SizedBox(width: 8.0),
+                          const SizedBox(width: 5.0),
                           Expanded(
                             child: Text(
                               message,
@@ -440,7 +437,7 @@ class SnackBarHelper {
                               textScaler: TextScaler.noScaling,
                               style: TextStyle(
                                 fontFamily: 'Anaheim',
-                                fontSize: 18.0,
+                                fontSize: 17.0,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF212121),
                               ),
