@@ -115,11 +115,14 @@ class _PickersSelectorTabViewState extends State<PickersSelectorTabView>
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 4),
+          height: 43,
+          margin: const EdgeInsets.symmetric(horizontal: 14.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
             color: isLight ? Colors.white : Colors.grey.shade800,
-            border: Border.all(color: Colors.black.withValues(alpha: 0.02)),
+            border: Border.all(
+              color: Colors.black.withValues(alpha: 0.02),
+            ),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
