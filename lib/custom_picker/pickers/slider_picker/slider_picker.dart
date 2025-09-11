@@ -428,7 +428,7 @@ class SnackBarHelper {
                               color: iconColor,
                               size: 26.0,
                             ),
-                          const SizedBox(width: 5.0),
+                          const SizedBox(width: 8.0),
                           Expanded(
                             child: Text(
                               message,
