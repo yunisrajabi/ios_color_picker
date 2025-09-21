@@ -368,7 +368,7 @@ class SnackBarHelper {
     late OverlayEntry overlay;
     final animationController = AnimationController(
       vsync: Navigator.of(context),
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 400),
       reverseDuration: const Duration(milliseconds: 200),
     );
 
@@ -377,8 +377,8 @@ class SnackBarHelper {
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: animationController,
-      curve: Curves.linearToEaseOut,
-      reverseCurve: Curves.linearToEaseOut,
+      curve: Curves.easeInOutBack,
+      reverseCurve: Curves.easeInOutBack,
     ));
 
     overlay = OverlayEntry(
@@ -404,7 +404,10 @@ class SnackBarHelper {
                         horizontal: 20.0,
                         vertical: 10.0,
                       ),
-                      padding: const EdgeInsets.all(14.0),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14.0,
+                        vertical: 16.0,
+                      ),
                       decoration: BoxDecoration(
                         color: bgColor,
                         border: Border.all(
@@ -415,7 +418,7 @@ class SnackBarHelper {
                         boxShadow: [
                           BoxShadow(
                             color: Theme.of(context).dividerColor,
-                            blurRadius: 10.0,
+                            blurRadius: 5.0,
                           ),
                         ],
                       ),
@@ -426,7 +429,7 @@ class SnackBarHelper {
                             Icon(
                               icon,
                               color: iconColor,
-                              size: 26.0,
+                              size: 28.0,
                             ),
                           const SizedBox(width: 8.0),
                           Expanded(
