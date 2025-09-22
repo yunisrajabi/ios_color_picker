@@ -64,13 +64,16 @@ class IOSColorPickerController {
             Radius.circular(20.0),
           ),
         ),
+        transitionAnimationController: AnimationController(
+          vsync: Navigator.of(context),
+          duration: Duration(milliseconds: 400),
+          reverseDuration: Duration(milliseconds: 300),
+        ),
         sheetAnimationStyle: AnimationStyle(
           duration: Duration(milliseconds: 400),
           reverseDuration: Duration(milliseconds: 300),
           curve: Curves.linearToEaseOut,
           reverseCurve: Curves.linearToEaseOut,
-          //  curve: Curves.easeInOutBack,
-          // reverseCurve: Curves.easeInOutBack,
         ),
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
