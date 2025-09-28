@@ -139,6 +139,7 @@ class _HistoryColorsState extends State<HistoryColors> {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: SuperTooltip(
+              backgroundColor: Colors.grey.shade200,
               onHide: () {
                 toolTip = -1;
               },
@@ -158,6 +159,13 @@ class _HistoryColorsState extends State<HistoryColors> {
               popupDirection: TooltipDirection.up,
               controller: toolTip == index ? _tipController : null,
               content: InkWell(
+                splashFactory: InkSparkle.splashFactory,
+                overlayColor: WidgetStatePropertyAll(
+                  Theme.of(context).brightness == Brightness.light
+                      ? Colors.black12
+                      : Colors.white10,
+                ),
+                borderRadius: BorderRadius.circular(20.0),
                 onTap: () {
                   historyColors.removeAt(index);
                   setHistory(delete: true);
@@ -179,6 +187,12 @@ class _HistoryColorsState extends State<HistoryColors> {
                 ),
               ),
               child: InkWell(
+                splashFactory: InkSparkle.splashFactory,
+                overlayColor: WidgetStatePropertyAll(
+                  Theme.of(context).brightness == Brightness.light
+                      ? Colors.black12
+                      : Colors.white10,
+                ),
                 onTap: () {
                   colorController.updateColor(historyColors[index]);
                   widget.onColorChanged(colorController.value);

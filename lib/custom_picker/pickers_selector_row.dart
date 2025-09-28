@@ -165,7 +165,7 @@ class _PickersSelectorTabViewState extends State<PickersSelectorTabView>
             labelColor: Colors.white,
             unselectedLabelColor: isLight ? Colors.black : Colors.white,
             tabs: _tabs,
-            splashFactory: NoSplash.splashFactory,
+            splashFactory: InkSparkle.splashFactory,
           ),
         ),
         // content

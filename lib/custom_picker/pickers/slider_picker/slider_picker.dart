@@ -305,7 +305,18 @@ class _SlidePickerState extends State<SlidePicker> {
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.copy_rounded, size: 20),
+                style: ButtonStyle(
+                  splashFactory: InkSparkle.splashFactory,
+                  overlayColor: WidgetStatePropertyAll(
+                    Theme.of(context).brightness == Brightness.light
+                        ? Colors.black12
+                        : Colors.white10,
+                  ),
+                ),
+                icon: const Icon(
+                  Icons.copy_rounded,
+                  size: 20,
+                ),
                 onPressed: () {
                   Clipboard.setData(
                     ClipboardData(

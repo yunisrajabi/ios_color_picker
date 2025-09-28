@@ -231,6 +231,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.transparent,
+                        splashFactory: InkSparkle.splashFactory,
                         overlayColor:
                             Theme.of(context).brightness == Brightness.light
                                 ? Colors.black12
@@ -273,6 +274,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.transparent,
+                        splashFactory: InkSparkle.splashFactory,
                         side: BorderSide.none,
                         overlayColor:
                             Theme.of(context).brightness == Brightness.light
