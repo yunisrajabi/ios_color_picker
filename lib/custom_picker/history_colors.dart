@@ -159,12 +159,11 @@ class _HistoryColorsState extends State<HistoryColors> {
               popupDirection: TooltipDirection.up,
               controller: toolTip == index ? _tipController : null,
               content: InkWell(
+                splashColor: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black12
+                    : Colors.white10,
                 splashFactory: InkSparkle.splashFactory,
-                overlayColor: WidgetStatePropertyAll(
-                  Theme.of(context).brightness == Brightness.light
-                      ? Colors.black12
-                      : Colors.white10,
-                ),
+                highlightColor: Colors.transparent,
                 borderRadius: BorderRadius.circular(20.0),
                 onTap: () {
                   historyColors.removeAt(index);
@@ -186,46 +185,52 @@ class _HistoryColorsState extends State<HistoryColors> {
                   ),
                 ),
               ),
-              child: InkWell(
-                splashFactory: InkSparkle.splashFactory,
-                overlayColor: WidgetStatePropertyAll(
-                  Theme.of(context).brightness == Brightness.light
-                      ? Colors.black12
-                      : Colors.white10,
-                ),
-                onTap: () {
-                  colorController.updateColor(historyColors[index]);
-                  widget.onColorChanged(colorController.value);
-                  _tipController.hideTooltip();
-                  toolTip = -1;
-                  setState(() {});
-                },
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: historyColors[index],
+                    ),
+                  ),
+                  if (colorController.value.toHex() ==
+                      historyColors[index].toHex())
                     Container(
-                      height: 40,
-                      width: 40,
+                      height: 36,
+                      width: 36,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: historyColors[index],
-                      ),
-                    ),
-                    if (colorController.value.toHex() ==
-                        historyColors[index].toHex())
-                      Container(
-                        height: 36,
-                        width: 36,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 2,
-                          ),
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 2,
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                  Positioned.fill(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor:
+                            Theme.of(context).brightness == Brightness.light
+                                ? Colors.black12
+                                : Colors.white10,
+                        splashFactory: InkSparkle.splashFactory,
+                        highlightColor: Colors.transparent,
+                        borderRadius: BorderRadius.circular(100.0),
+                        onTap: () {
+                          colorController.updateColor(historyColors[index]);
+                          widget.onColorChanged(colorController.value);
+                          _tipController.hideTooltip();
+                          toolTip = -1;
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
