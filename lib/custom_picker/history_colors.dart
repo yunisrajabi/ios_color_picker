@@ -96,6 +96,14 @@ class _HistoryColorsState extends State<HistoryColors> {
         itemBuilder: (context, index) {
           if (index == historyColors.length) {
             return IconButton(
+              style: ButtonStyle(
+                overlayColor: WidgetStatePropertyAll(
+                  Theme.of(context).brightness == Brightness.light
+                      ? Colors.black12
+                      : Colors.white12,
+                ),
+                splashFactory: InkSparkle.splashFactory,
+              ),
               onPressed: () {
                 historyColors.add(colorController.value);
                 setHistory();
@@ -159,9 +167,7 @@ class _HistoryColorsState extends State<HistoryColors> {
               popupDirection: TooltipDirection.up,
               controller: toolTip == index ? _tipController : null,
               content: InkWell(
-                splashColor: Theme.of(context).brightness == Brightness.light
-                    ? Colors.black12
-                    : Colors.white10,
+                splashColor: Colors.black12,
                 splashFactory: InkSparkle.splashFactory,
                 highlightColor: Colors.transparent,
                 borderRadius: BorderRadius.circular(20.0),
@@ -213,10 +219,7 @@ class _HistoryColorsState extends State<HistoryColors> {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        splashColor:
-                            Theme.of(context).brightness == Brightness.light
-                                ? Colors.black12
-                                : Colors.white10,
+                        splashColor: Colors.white24,
                         splashFactory: InkSparkle.splashFactory,
                         highlightColor: Colors.transparent,
                         borderRadius: BorderRadius.circular(100.0),

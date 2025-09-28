@@ -203,11 +203,11 @@ class _SlidePickerState extends State<SlidePicker> {
                       margin: const EdgeInsets.only(left: 14),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          // Theme.of(context).brightness == Brightness.light
-                          //     ? Colors.white
-                          //     : Colors.grey.shade800,
-                          borderRadius: BorderRadius.all(Radius.circular(100))),
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(100),
+                        ),
+                      ),
                       child: Text(
                         textScaler: TextScaler.noScaling,
                         overflow: TextOverflow.ellipsis,

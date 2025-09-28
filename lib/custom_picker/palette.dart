@@ -72,31 +72,65 @@ class ThumbPainter extends CustomPainter {
   final bool small;
   final HSVColor hsvColor;
 
+  // @override
+  // void paint(Canvas canvas, Size size) {
+  //   canvas.drawShadow(
+  //     Path()
+  //       ..addOval(
+  //         Rect.fromCircle(
+  //           center: const Offset(0.5, 2.0),
+  //           radius: size.width * 1.8,
+  //         ),
+  //       ),
+  //     Colors.black,
+  //     3.0,
+  //     true,
+  //   );
+  //   canvas.drawCircle(
+  //       const Offset(8.0, 14 * 0.3),
+  //       small ? 11 : 11,
+  //       Paint()
+  //         ..color = Colors.white
+  //         ..style = PaintingStyle.fill);
+  //   if (!small) {
+  //     canvas.drawCircle(
+  //         const Offset(8.0, 14 * 0.3),
+  //         9.5,
+  //         Paint()
+  //           ..color = hsvColor.toColor().withValues(alpha: 1)
+  //           ..style = PaintingStyle.fill);
+  //   }
+  // }
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawShadow(
-      Path()
-        ..addOval(
-          Rect.fromCircle(
-              center: const Offset(0.5, 2.0), radius: size.width * 1.8),
-        ),
-      Colors.black,
-      3.0,
-      true,
-    );
+    final Offset center = const Offset(8.0, 14 * 0.3);
+    final double radius = small ? 11 : 11;
+
+    // سایه نرم پشت thumb
+    final Paint shadowPaint = Paint()
+      ..color = Colors.black26
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0);
+
+    canvas.drawCircle(center.translate(-2, 0), radius, shadowPaint);
+
+    // دایره سفید (پس‌زمینه thumb)
     canvas.drawCircle(
-        const Offset(8.0, 14 * 0.3),
-        small ? 11 : 11,
-        Paint()
-          ..color = Colors.white
-          ..style = PaintingStyle.fill);
+      center,
+      radius,
+      Paint()
+        ..color = Colors.white
+        ..style = PaintingStyle.fill,
+    );
+
+    // دایره رنگی داخل (وقتی small=false)
     if (!small) {
       canvas.drawCircle(
-          const Offset(8.0, 14 * 0.3),
-          9.5,
-          Paint()
-            ..color = hsvColor.toColor().withValues(alpha: 1)
-            ..style = PaintingStyle.fill);
+        center,
+        radius - 1.5,
+        Paint()
+          ..color = hsvColor.toColor().withValues(alpha: 1)
+          ..style = PaintingStyle.fill,
+      );
     }
   }
 
