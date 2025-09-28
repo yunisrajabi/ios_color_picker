@@ -109,9 +109,9 @@ class ThumbPainter extends CustomPainter {
     // سایه نرم پشت thumb
     final Paint shadowPaint = Paint()
       ..color = Colors.black26
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0);
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 0.0);
 
-    canvas.drawCircle(center.translate(-2, 0), radius, shadowPaint);
+    canvas.drawCircle(center.translate(0, 0), radius, shadowPaint);
 
     // دایره سفید (پس‌زمینه thumb)
     canvas.drawCircle(
