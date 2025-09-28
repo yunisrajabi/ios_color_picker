@@ -116,38 +116,13 @@ class _HistoryColorsState extends State<HistoryColors> {
                 size: 24,
               ),
             );
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 5),
-            //   child: InkWell(
-            //     onTap: () {
-            //       historyColors.add(colorController.value);
-            //       setHistory();
-            //     },
-            //     child: Container(
-            //       height: 40,
-            //       width: 40,
-            //       decoration: BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         color: Colors.white.withOpacity(0.16),
-            //         border: Border.all(
-            //           color: const Color(0xffB0B0BD),
-            //           width: 1.5,
-            //         ),
-            //       ),
-            //       child: const Icon(
-            //         Icons.add,
-            //         color: Color(0xffB0B0BD),
-            //         size: 20,
-            //       ),
-            //     ),
-            //   ),
-            //);
           }
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: SuperTooltip(
               backgroundColor: Colors.grey.shade200,
+              borderColor: Colors.transparent,
               onHide: () {
                 toolTip = -1;
               },
