@@ -422,7 +422,7 @@ class SnackBarHelper {
                           color: iconColor,
                           width: 0.5,
                         ),
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(20.0),
                         boxShadow: [
                           BoxShadow(
                             color: Theme.of(context).dividerColor,

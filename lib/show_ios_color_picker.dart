@@ -61,7 +61,7 @@ class IOSColorPickerController {
         elevation: 0.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(20.0),
+            Radius.circular(30.0),
           ),
         ),
         transitionAnimationController: AnimationController(
