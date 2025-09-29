@@ -58,7 +58,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
             ? Color(0xFFFAFAFA)
             : Color(0xFF212121),
         borderRadius: BorderRadius.all(
-          Radius.circular(20.0),
+          Radius.circular(30.0),
         ),
       ),
       child: SingleChildScrollView(
@@ -123,8 +123,11 @@ class _IosColorPickerState extends State<IosColorPicker> {
                   margin: const EdgeInsets.only(right: 14, left: 14),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.all(Radius.circular(100))),
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(100),
+                    ),
+                  ),
                   child: ValueListenableBuilder<Color>(
                     valueListenable: colorController,
                     builder: (context, color, child) {
@@ -161,7 +164,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                       margin: const EdgeInsets.only(left: 18),
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(8),
+                          Radius.circular(10.0),
                         ),
                       ),
                       child: Transform.scale(
@@ -194,7 +197,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                           margin: const EdgeInsets.only(left: 18),
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
+                              Radius.circular(10.0),
                             ),
                             color: _tempColor,
                           ),
@@ -213,15 +216,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
               ],
             ),
             const SizedBox(height: 20.0),
-            // Divider(
-            //   color: Theme.of(context).brightness == Brightness.light
-            //       ? Colors.black12
-            //       : Colors.white10,
-            //   height: 0.0,
-            //   thickness: 0.5,
-            //   indent: 18,
-            //   endIndent: 18,
-            // ),
+
             Padding(
               padding: const EdgeInsets.fromLTRB(14.0, 0.0, 10.0, 10.0),
               child: Row(

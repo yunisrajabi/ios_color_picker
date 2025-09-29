@@ -23,7 +23,7 @@ class GridPicker extends StatelessWidget {
       width: double.infinity,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(
-          Radius.circular(8),
+          Radius.circular(10.0),
         ),
       ),
       child: GridView.builder(

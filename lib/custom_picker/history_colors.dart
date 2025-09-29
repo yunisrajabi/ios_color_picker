@@ -109,7 +109,7 @@ class _HistoryColorsState extends State<HistoryColors> {
                 setHistory();
               },
               icon: Icon(
-                Icons.add,
+                Icons.add_rounded,
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.black54
                     : Colors.grey.shade400,

@@ -58,12 +58,6 @@ class IOSColorPickerController {
   }) async {
     colorController = ColorController(startingColor ?? selectedColor);
     return showModalBottomSheet(
-        elevation: 0.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(30.0),
-          ),
-        ),
         transitionAnimationController: AnimationController(
           vsync: Navigator.of(context),
           duration: Duration(milliseconds: 400),
