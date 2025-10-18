@@ -379,7 +379,7 @@ class SnackBarHelper {
     late OverlayEntry overlay;
     final animationController = AnimationController(
       vsync: Navigator.of(context),
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 300),
       reverseDuration: const Duration(milliseconds: 200),
     );
 
@@ -388,8 +388,8 @@ class SnackBarHelper {
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: animationController,
-      curve: Curves.easeInOutBack,
-      reverseCurve: Curves.easeOutBack,
+      curve: Curves.linearToEaseOut,
+      reverseCurve: Curves.linearToEaseOut,
     ));
 
     overlay = OverlayEntry(
@@ -397,65 +397,62 @@ class SnackBarHelper {
         return SafeArea(
           child: Align(
             alignment: Alignment.topCenter,
-            child: FadeTransition(
-              opacity: animationController,
-              child: SlideTransition(
-                position: slideAnimation,
-                child: Dismissible(
-                  key: UniqueKey(),
-                  direction: DismissDirection.horizontal,
-                  onDismissed: (_) async {
-                    await animationController.reverse();
-                    overlay.remove();
-                  },
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 20.0,
-                        vertical: 10.0,
+            child: SlideTransition(
+              position: slideAnimation,
+              child: Dismissible(
+                key: UniqueKey(),
+                direction: DismissDirection.horizontal,
+                onDismissed: (_) async {
+                  await animationController.reverse();
+                  overlay.remove();
+                },
+                child: Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 10.0,
+                    ),
+                    padding: const EdgeInsets.all(14.0),
+                    decoration: BoxDecoration(
+                      color: bgColor,
+                      border: Border.all(
+                        color: iconColor,
+                        width: 0.5,
                       ),
-                      padding: const EdgeInsets.all(14.0),
-                      decoration: BoxDecoration(
-                        color: bgColor,
-                        border: Border.all(
-                          color: iconColor,
-                          width: 0.5,
+                      borderRadius: BorderRadius.circular(18.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).dividerColor,
+                          blurRadius: 5.0,
                         ),
-                        borderRadius: BorderRadius.circular(18.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).dividerColor,
-                            blurRadius: 5.0,
+                      ],
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if (showIcon)
+                          Icon(
+                            icon,
+                            color: iconColor,
+                            size: 24.0,
                           ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (showIcon)
-                            Icon(
-                              icon,
-                              color: iconColor,
-                              size: 24.0,
-                            ),
-                          const SizedBox(width: 8.0),
-                          Expanded(
-                            child: Text(
-                              message,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              textScaler: TextScaler.noScaling,
-                              style: TextStyle(
-                                fontFamily: 'Anaheim',
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF212121),
-                              ),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: Text(
+                            message,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textScaler: TextScaler.noScaling,
+                            style: TextStyle(
+                              fontFamily: 'Anaheim',
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF212121),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
