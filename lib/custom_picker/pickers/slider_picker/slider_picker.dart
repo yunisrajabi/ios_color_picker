@@ -350,7 +350,6 @@ class SnackBarHelper {
     BuildContext context,
     String message, {
     MessageType messageType = MessageType.success,
-    bool showIcon = true,
   }) async {
     // اگر Snackbar فعلی وجود داره، اول با انیمیشن ببندش
     if (_currentOverlay != null && _currentController != null) {
@@ -373,7 +372,7 @@ class SnackBarHelper {
         icon = Icons.check_circle_rounded;
         iconColor = Color(0xFF01B001);
         bgColor = Color.alphaBlend(
-          Color(0xFF01B001).withValues(alpha: 0.1),
+          Color(0xFF01B001).withValues(alpha: 0.15),
           bgColor,
         );
         break;
@@ -381,7 +380,7 @@ class SnackBarHelper {
         icon = Icons.cancel_rounded;
         iconColor = Color(0xFFF44336);
         bgColor = Color.alphaBlend(
-          Color(0xFFF44336).withValues(alpha: 0.1),
+          Color(0xFFF44336).withValues(alpha: 0.15),
           bgColor,
         );
         break;
@@ -389,7 +388,7 @@ class SnackBarHelper {
         icon = Icons.error_rounded;
         iconColor = Color(0xFFEAB002);
         bgColor = Color.alphaBlend(
-          Color(0xFFEAB002).withValues(alpha: 0.1),
+          Color(0xFFEAB002).withValues(alpha: 0.15),
           bgColor,
         );
         break;
@@ -435,8 +434,8 @@ class SnackBarHelper {
                 child: Material(
                   color: Colors.transparent,
                   child: Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 0.0),
-                    padding: const EdgeInsets.fromLTRB(14.0, 14.0, 20.0, 14.0),
+                    margin: const EdgeInsets.fromLTRB(20.0, 16.0, 20.0, 0.0),
+                    padding: const EdgeInsets.fromLTRB(10.0, 10.0, 16.0, 10.0),
                     decoration: BoxDecoration(
                       color: bgColor,
                       borderRadius: BorderRadius.circular(100.0),
@@ -458,13 +457,12 @@ class SnackBarHelper {
                         mainAxisSize: MainAxisSize.min, // عرض به اندازه محتوا
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          if (showIcon)
-                            Icon(
-                              icon,
-                              color: iconColor,
-                              size: 26.0,
-                            ),
-                          if (showIcon) const SizedBox(width: 8.0),
+                          Icon(
+                            icon,
+                            color: iconColor,
+                            size: 24.0,
+                          ),
+                          const SizedBox(width: 8.0),
                           Flexible(
                             child: Text(
                               message,
@@ -473,7 +471,7 @@ class SnackBarHelper {
                               textScaler: TextScaler.noScaling,
                               style: TextStyle(
                                 fontFamily: 'Anaheim',
-                                fontSize: 17.0,
+                                fontSize: 15.0,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF212121),
                               ),
