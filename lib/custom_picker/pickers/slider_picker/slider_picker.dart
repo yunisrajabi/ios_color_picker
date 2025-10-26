@@ -343,8 +343,23 @@ class _SlidePickerState extends State<SlidePicker> {
 enum MessageType { success, error, info }
 
 class SnackBarHelper {
-  static void show(BuildContext context, String message,
-      {MessageType messageType = MessageType.success, bool showIcon = true}) {
+  static OverlayEntry? _currentOverlay;
+  static AnimationController? _currentController;
+
+  static void show(
+    BuildContext context,
+    String message, {
+    MessageType messageType = MessageType.success,
+    bool showIcon = true,
+  }) async {
+    // اگر قبلاً Snackbar فعاله → با انیمیشن بسته‌اش کن
+    if (_currentOverlay != null && _currentController != null) {
+      await _currentController!.reverse();
+      _currentOverlay!.remove();
+      _currentOverlay = null;
+      _currentController = null;
+    }
+
     IconData icon;
     Color iconColor;
     Color bgColor = Color(0xFFFFFFFF);
@@ -376,21 +391,22 @@ class SnackBarHelper {
         break;
     }
 
-    late OverlayEntry overlay;
-    final animationController = AnimationController(
+    final controller = AnimationController(
       vsync: Navigator.of(context),
       duration: const Duration(milliseconds: 300),
-      reverseDuration: const Duration(milliseconds: 200),
+      reverseDuration: const Duration(milliseconds: 250),
     );
 
     final slideAnimation = Tween<Offset>(
       begin: const Offset(0, -1),
       end: Offset.zero,
     ).animate(CurvedAnimation(
-      parent: animationController,
+      parent: controller,
       curve: Curves.linearToEaseOut,
       reverseCurve: Curves.linearToEaseOut,
     ));
+
+    late OverlayEntry overlay; // ✅ اینجا late اضافه شد
 
     overlay = OverlayEntry(
       builder: (context) {
@@ -403,7 +419,7 @@ class SnackBarHelper {
                 key: UniqueKey(),
                 direction: DismissDirection.horizontal,
                 onDismissed: (_) async {
-                  await animationController.reverse();
+                  await controller.reverse();
                   overlay.remove();
                 },
                 child: Material(
@@ -416,15 +432,16 @@ class SnackBarHelper {
                     padding: const EdgeInsets.all(14.0),
                     decoration: BoxDecoration(
                       color: bgColor,
+                      borderRadius: BorderRadius.circular(100.0),
                       border: Border.all(
-                        color: iconColor,
+                        color: iconColor.withValues(alpha: 0.1),
                         width: 0.5,
                       ),
-                      borderRadius: BorderRadius.circular(18.0),
                       boxShadow: [
                         BoxShadow(
                           color: Theme.of(context).dividerColor,
-                          blurRadius: 5.0,
+                          blurRadius: 10.0,
+                          offset: const Offset(0, 0),
                         ),
                       ],
                     ),
@@ -435,7 +452,7 @@ class SnackBarHelper {
                           Icon(
                             icon,
                             color: iconColor,
-                            size: 24.0,
+                            size: 26.0,
                           ),
                         const SizedBox(width: 8.0),
                         Expanded(
@@ -464,14 +481,21 @@ class SnackBarHelper {
     );
 
     Overlay.of(context).insert(overlay);
-    animationController.forward();
+    _currentOverlay = overlay;
+    _currentController = controller;
 
-    // بعد از 3 ثانیه خودکار بسته میشه
+    controller.forward();
+
+    // بعد از 3 ثانیه خودش با انیمیشن بسته بشه
     Future.delayed(const Duration(seconds: 3), () async {
-      if (animationController.status == AnimationStatus.forward ||
-          animationController.status == AnimationStatus.completed) {
-        await animationController.reverse();
+      if (controller.status == AnimationStatus.forward ||
+          controller.status == AnimationStatus.completed) {
+        await controller.reverse();
         overlay.remove();
+        if (_currentOverlay == overlay) {
+          _currentOverlay = null;
+          _currentController = null;
+        }
       }
     });
   }
