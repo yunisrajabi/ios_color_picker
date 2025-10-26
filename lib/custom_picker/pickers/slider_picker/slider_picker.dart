@@ -352,10 +352,14 @@ class SnackBarHelper {
     MessageType messageType = MessageType.success,
     bool showIcon = true,
   }) async {
-    // اگر قبلاً Snackbar فعاله → با انیمیشن بسته‌اش کن
+    // اگر Snackbar فعلی وجود داره، اول با انیمیشن ببندش
     if (_currentOverlay != null && _currentController != null) {
       await _currentController!.reverse();
-      _currentOverlay!.remove();
+      try {
+        if (_currentOverlay!.mounted) {
+          _currentOverlay!.remove();
+        }
+      } catch (_) {}
       _currentOverlay = null;
       _currentController = null;
     }
@@ -420,21 +424,24 @@ class SnackBarHelper {
                 direction: DismissDirection.horizontal,
                 onDismissed: (_) async {
                   await controller.reverse();
-                  overlay.remove();
+                  if (overlay.mounted) {
+                    overlay.remove();
+                  }
+                  if (_currentOverlay == overlay) {
+                    _currentOverlay = null;
+                    _currentController = null;
+                  }
                 },
                 child: Material(
                   color: Colors.transparent,
                   child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                      vertical: 10.0,
-                    ),
-                    padding: const EdgeInsets.all(14.0),
+                    margin: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 0.0),
+                    padding: const EdgeInsets.fromLTRB(14.0, 14.0, 20.0, 14.0),
                     decoration: BoxDecoration(
                       color: bgColor,
                       borderRadius: BorderRadius.circular(100.0),
                       border: Border.all(
-                        color: iconColor.withValues(alpha: 0.1),
+                        color: Theme.of(context).dividerColor,
                         width: 0.5,
                       ),
                       boxShadow: [
@@ -445,31 +452,35 @@ class SnackBarHelper {
                         ),
                       ],
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        if (showIcon)
-                          Icon(
-                            icon,
-                            color: iconColor,
-                            size: 26.0,
-                          ),
-                        const SizedBox(width: 8.0),
-                        Expanded(
-                          child: Text(
-                            message,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textScaler: TextScaler.noScaling,
-                            style: TextStyle(
-                              fontFamily: 'Anaheim',
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF212121),
+                    child: IntrinsicWidth(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min, // عرض به اندازه محتوا
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (showIcon)
+                            Icon(
+                              icon,
+                              color: iconColor,
+                              size: 26.0,
+                            ),
+                          if (showIcon) const SizedBox(width: 8.0),
+                          Flexible(
+                            child: Text(
+                              message,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textScaler: TextScaler.noScaling,
+                              style: TextStyle(
+                                fontFamily: 'Anaheim',
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF212121),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -480,10 +491,9 @@ class SnackBarHelper {
       },
     );
 
-    Overlay.of(context).insert(overlay);
+    Navigator.of(context).overlay!.insert(overlay);
     _currentOverlay = overlay;
     _currentController = controller;
-
     controller.forward();
 
     // بعد از 3 ثانیه خودش با انیمیشن بسته بشه
@@ -491,7 +501,9 @@ class SnackBarHelper {
       if (controller.status == AnimationStatus.forward ||
           controller.status == AnimationStatus.completed) {
         await controller.reverse();
-        overlay.remove();
+        if (overlay.mounted) {
+          overlay.remove();
+        }
         if (_currentOverlay == overlay) {
           _currentOverlay = null;
           _currentController = null;
