@@ -394,20 +394,22 @@ class SnackBarHelper {
         break;
     }
 
-    final controller = AnimationController(
+  final controller = AnimationController(
       vsync: Navigator.of(context),
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 1000),
       reverseDuration: const Duration(milliseconds: 250),
     );
 
     final slideAnimation = Tween<Offset>(
       begin: const Offset(0, -1),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: controller,
-      curve: Curves.linearToEaseOut,
-      reverseCurve: Curves.linearToEaseOut,
-    ));
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.elasticOut,
+        reverseCurve: Curves.linearToEaseOut,
+      ),
+    );
 
     late OverlayEntry overlay; // ✅ اینجا late اضافه شد
 
