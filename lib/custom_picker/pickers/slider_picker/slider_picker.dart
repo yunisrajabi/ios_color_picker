@@ -434,8 +434,13 @@ class SnackBarHelper {
                 child: Material(
                   color: Colors.transparent,
                   child: Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 16.0, 20.0, 0.0),
-                    padding: const EdgeInsets.fromLTRB(10.0, 10.0, 16.0, 10.0),
+                    margin: EdgeInsets.fromLTRB(
+                      20.0,
+                      View.of(context).viewPadding.top / 5.0,
+                      20.0,
+                      0.0,
+                    ),
+                    padding: const EdgeInsets.fromLTRB(16, 10, 18, 10),
                     decoration: BoxDecoration(
                       color: bgColor,
                       borderRadius: BorderRadius.circular(100.0),
