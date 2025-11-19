@@ -325,7 +325,7 @@ class _SlidePickerState extends State<SlidePicker> {
                   );
                   SnackBarHelper.show(
                     context,
-                    'Copied #${currentHsvColor.toColor().toHex().toUpperCase()}',
+                    '#${currentHsvColor.toColor().toHex().toUpperCase()} Copied',
                     messageType: MessageType.success,
                   );
                 },
@@ -394,7 +394,7 @@ class SnackBarHelper {
         break;
     }
 
-  final controller = AnimationController(
+    final controller = AnimationController(
       vsync: Navigator.of(context),
       duration: const Duration(milliseconds: 1000),
       reverseDuration: const Duration(milliseconds: 250),
