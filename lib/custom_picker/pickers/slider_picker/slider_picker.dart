@@ -396,17 +396,28 @@ class SnackBarHelper {
 
     final controller = AnimationController(
       vsync: Navigator.of(context),
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 700),
       reverseDuration: const Duration(milliseconds: 250),
     );
 
     final slideAnimation = Tween<Offset>(
-      begin: const Offset(0, -1),
+      begin: const Offset(0, -0.7),
       end: Offset.zero,
     ).animate(
       CurvedAnimation(
         parent: controller,
         curve: Curves.elasticOut,
+        reverseCurve: Curves.linearToEaseOut,
+      ),
+    );
+
+    final fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.fastLinearToSlowEaseIn,
         reverseCurve: Curves.linearToEaseOut,
       ),
     );
@@ -420,71 +431,74 @@ class SnackBarHelper {
             alignment: Alignment.topCenter,
             child: SlideTransition(
               position: slideAnimation,
-              child: Dismissible(
-                key: UniqueKey(),
-                direction: DismissDirection.horizontal,
-                onDismissed: (_) async {
-                  await controller.reverse();
-                  if (overlay.mounted) {
-                    overlay.remove();
-                  }
-                  if (_currentOverlay == overlay) {
-                    _currentOverlay = null;
-                    _currentController = null;
-                  }
-                },
-                child: Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(
-                      20.0,
-                      View.of(context).viewPadding.top / 5.0,
-                      20.0,
-                      0.0,
-                    ),
-                    padding: const EdgeInsets.fromLTRB(16, 10, 18, 10),
-                    decoration: BoxDecoration(
-                      color: bgColor,
-                      borderRadius: BorderRadius.circular(100.0),
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor,
-                        width: 0.5,
+              child: FadeTransition(
+                opacity: fadeAnimation,
+                child: Dismissible(
+                  key: UniqueKey(),
+                  direction: DismissDirection.horizontal,
+                  onDismissed: (_) async {
+                    await controller.reverse();
+                    if (overlay.mounted) {
+                      overlay.remove();
+                    }
+                    if (_currentOverlay == overlay) {
+                      _currentOverlay = null;
+                      _currentController = null;
+                    }
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(
+                        20.0,
+                        View.of(context).viewPadding.top / 5.0,
+                        20.0,
+                        0.0,
                       ),
-                      boxShadow: [
-                        BoxShadow(
+                      padding: const EdgeInsets.fromLTRB(16, 10, 18, 10),
+                      decoration: BoxDecoration(
+                        color: bgColor,
+                        borderRadius: BorderRadius.circular(100.0),
+                        border: Border.all(
                           color: Theme.of(context).dividerColor,
-                          blurRadius: 10.0,
-                          offset: const Offset(0, 0),
+                          width: 0.5,
                         ),
-                      ],
-                    ),
-                    child: IntrinsicWidth(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min, // عرض به اندازه محتوا
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            icon,
-                            color: iconColor,
-                            size: 24.0,
-                          ),
-                          const SizedBox(width: 5.0),
-                          Flexible(
-                            child: Text(
-                              message,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              textScaler: TextScaler.noScaling,
-                              style: TextStyle(
-                                fontFamily: 'Anaheim',
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF212121),
-                              ),
-                            ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).dividerColor,
+                            blurRadius: 10.0,
+                            offset: const Offset(0, 0),
                           ),
                         ],
+                      ),
+                      child: IntrinsicWidth(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min, // عرض به اندازه محتوا
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              icon,
+                              color: iconColor,
+                              size: 24.0,
+                            ),
+                            const SizedBox(width: 5.0),
+                            Flexible(
+                              child: Text(
+                                message,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textScaler: TextScaler.noScaling,
+                                style: TextStyle(
+                                  fontFamily: 'Anaheim',
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF212121),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
