@@ -396,7 +396,7 @@ class SnackBarHelper {
 
     final controller = AnimationController(
       vsync: Navigator.of(context),
-      duration: const Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 800),
       reverseDuration: const Duration(milliseconds: 250),
     );
 
