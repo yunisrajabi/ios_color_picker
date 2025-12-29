@@ -58,6 +58,9 @@ class IOSColorPickerController {
   }) async {
     colorController = ColorController(startingColor ?? selectedColor);
     return showModalBottomSheet(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.9,
+        ),
         transitionAnimationController: AnimationController(
           vsync: Navigator.of(context),
           duration: Duration(milliseconds: 400),
