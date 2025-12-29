@@ -51,39 +51,81 @@ class IOSColorPickerController {
   /// iOS Native color Picker clone, for all Platforms.
   ///
   /// [startingColor] is [null] then the default color will be green
-  void showIOSCustomColorPicker({
+  // void showIOSCustomColorPicker({
+  //   required BuildContext context,
+  //   required ValueChanged<Color> onColorChanged,
+  //   Color? startingColor,
+  // }) async {
+  //   colorController = ColorController(startingColor ?? selectedColor);
+  //   return showModalBottomSheet(
+  //       transitionAnimationController: AnimationController(
+  //         vsync: Navigator.of(context),
+  //         duration: Duration(milliseconds: 400),
+  //         reverseDuration: Duration(milliseconds: 300),
+  //       ),
+  //       sheetAnimationStyle: AnimationStyle(
+  //         duration: Duration(milliseconds: 400),
+  //         reverseDuration: Duration(milliseconds: 300),
+  //         curve: Curves.linearToEaseOut,
+  //         reverseCurve: Curves.linearToEaseOut,
+  //       ),
+  //       backgroundColor: Colors.transparent,
+  //       barrierColor: Colors.transparent,
+  //       isScrollControlled: true,
+  //       context: context,
+  //       builder: (context) {
+  //         return IosColorPicker(
+  //           onColorSelected: (value) {
+  //             selectedColor = value;
+  //             onColorChanged(selectedColor);
+  //           },
+  //         );
+  //       });
+  // }
+  void showIOSCustomColorPickerDialog({
     required BuildContext context,
     required ValueChanged<Color> onColorChanged,
     Color? startingColor,
-  }) async {
+  }) {
     colorController = ColorController(startingColor ?? selectedColor);
-    return showModalBottomSheet(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.9,
-        ),
-        transitionAnimationController: AnimationController(
-          vsync: Navigator.of(context),
-          duration: Duration(milliseconds: 400),
-          reverseDuration: Duration(milliseconds: 300),
-        ),
-        sheetAnimationStyle: AnimationStyle(
-          duration: Duration(milliseconds: 400),
-          reverseDuration: Duration(milliseconds: 300),
+
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: '',
+      barrierColor: Colors.black12,
+      transitionDuration: const Duration(milliseconds: 400),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return Center(
+          child: Material(
+            color: Colors.transparent,
+            child: IosColorPicker(
+              onColorSelected: (value) {
+                selectedColor = value;
+                onColorChanged(selectedColor);
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
           curve: Curves.linearToEaseOut,
           reverseCurve: Curves.linearToEaseOut,
-        ),
-        backgroundColor: Colors.transparent,
-        barrierColor: Colors.transparent,
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return IosColorPicker(
-            onColorSelected: (value) {
-              selectedColor = value;
-              onColorChanged(selectedColor);
-            },
-          );
-        });
+        );
+
+        return FadeTransition(
+          opacity: curvedAnimation,
+          child: ScaleTransition(
+            scale:
+                Tween<double>(begin: 0.95, end: 1.0).animate(curvedAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
   }
 
   /// Cancel the color subscription
