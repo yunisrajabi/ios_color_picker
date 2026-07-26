@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ios_color_picker/custom_picker/extensions.dart';
@@ -323,7 +325,7 @@ class _SlidePickerState extends State<SlidePicker> {
                       text: currentHsvColor.toColor().toHex().toUpperCase(),
                     ),
                   );
-                  SnackBarHelper.show(
+                  OverlayHelper.showSnackbar(
                     context,
                     '#${currentHsvColor.toColor().toHex().toUpperCase()} Copied',
                     messageType: MessageType.success,
@@ -342,32 +344,142 @@ class _SlidePickerState extends State<SlidePicker> {
 
 enum MessageType { success, error, info }
 
-class SnackBarHelper {
-  static OverlayEntry? _currentOverlay;
-  static AnimationController? _currentController;
+class OverlayHelper {
+  OverlayHelper._();
 
-  static void show(
+  static OverlayEntry? _entry;
+  static AnimationController? _controller;
+  static bool _isVisible = false;
+
+  // ── Snackbar state ──────────────────────────────────────────
+  static String _message = '';
+  static MessageType _messageType = MessageType.success;
+  static Timer? _autoDismissTimer;
+
+  // ════════════════════════════════════════════════════════════
+  //  PUBLIC API
+  // ════════════════════════════════════════════════════════════
+
+  static void showSnackbar(
     BuildContext context,
     String message, {
     MessageType messageType = MessageType.success,
   }) async {
-    // اگر Snackbar فعلی وجود داره، اول با انیمیشن ببندش
-    if (_currentOverlay != null && _currentController != null) {
-      await _currentController!.reverse();
-      try {
-        if (_currentOverlay!.mounted) {
-          _currentOverlay!.remove();
-        }
-      } catch (_) {}
-      _currentOverlay = null;
-      _currentController = null;
+    _autoDismissTimer?.cancel();
+    _message = message;
+    _messageType = messageType;
+
+    if (_isVisible) {
+      // اگر اسنک‌بار در حال حاضر باز است، آن را ریورس کرده و با پیام جدید باز می‌کنیم
+      await _controller?.reverse();
+      _rebuild();
+      _controller?.forward();
+    } else {
+      _init(context);
+      _isVisible = true;
+      _controller?.forward();
     }
 
+    _startAutoDismiss();
+  }
+
+  static void forceHide() {
+    _autoDismissTimer?.cancel();
+    _dispose();
+  }
+
+  // ════════════════════════════════════════════════════════════
+  //  PRIVATE – lifecycle
+  // ════════════════════════════════════════════════════════════
+
+  static void _init(BuildContext context) {
+    if (_controller != null) return;
+
+    _controller = AnimationController(
+      vsync: Navigator.of(context),
+      duration: const Duration(milliseconds: 1000),
+      reverseDuration: const Duration(milliseconds: 700),
+    );
+
+    _entry = OverlayEntry(builder: _build);
+    Navigator.of(context).overlay!.insert(_entry!);
+  }
+
+  static void _dispose() {
+    try {
+      if (_entry?.mounted ?? false) _entry!.remove();
+    } catch (_) {}
+    _entry = null;
+    _controller?.dispose();
+    _controller = null;
+    _isVisible = false;
+  }
+
+  static void _rebuild() {
+    if (_entry?.mounted ?? false) _entry!.markNeedsBuild();
+  }
+
+  static void _startAutoDismiss() {
+    _autoDismissTimer?.cancel();
+    _autoDismissTimer = Timer(const Duration(seconds: 3), () async {
+      if (_isVisible) {
+        await _controller?.reverse();
+        _dispose();
+      }
+    });
+  }
+
+  // ════════════════════════════════════════════════════════════
+  //  BUILD
+  // ════════════════════════════════════════════════════════════
+
+  static Widget _build(BuildContext context) {
+    if (!_isVisible) return const SizedBox.shrink();
+
+    final slideAnimation = Tween<Offset>(
+      begin: const Offset(0, -0.7),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.elasticOut,
+        reverseCurve: Curves.elasticOut,
+      ),
+    );
+
+    final fadeAnimation = Tween<double>(
+      begin: 0.1,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.fastLinearToSlowEaseIn,
+        reverseCurve: Curves.fastLinearToSlowEaseIn,
+      ),
+    );
+
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: SlideTransition(
+          position: slideAnimation,
+          child: FadeTransition(
+            opacity: fadeAnimation,
+            child: _buildSnackbarContent(context),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ── Snackbar Content ────────────────────────────────────────
+
+  static Widget _buildSnackbarContent(BuildContext context) {
     IconData icon;
     Color iconColor;
     Color bgColor = Color(0xFFFFFFFF);
 
-    switch (messageType) {
+    switch (_messageType) {
       case MessageType.success:
         icon = Icons.check_circle_rounded;
         iconColor = Color(0xFF01B001);
@@ -394,140 +506,268 @@ class SnackBarHelper {
         break;
     }
 
-    final controller = AnimationController(
-      vsync: Navigator.of(context),
-      duration: const Duration(milliseconds: 800),
-      reverseDuration: const Duration(milliseconds: 250),
-    );
-
-    final slideAnimation = Tween<Offset>(
-      begin: const Offset(0, -0.7),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Curves.elasticOut,
-        reverseCurve: Curves.linearToEaseOut,
-      ),
-    );
-
-    final fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Curves.fastLinearToSlowEaseIn,
-        reverseCurve: Curves.linearToEaseOut,
-      ),
-    );
-
-    late OverlayEntry overlay; // ✅ اینجا late اضافه شد
-
-    overlay = OverlayEntry(
-      builder: (context) {
-        return SafeArea(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: SlideTransition(
-              position: slideAnimation,
-              child: FadeTransition(
-                opacity: fadeAnimation,
-                child: Dismissible(
-                  key: UniqueKey(),
-                  direction: DismissDirection.horizontal,
-                  onDismissed: (_) async {
-                    await controller.reverse();
-                    if (overlay.mounted) {
-                      overlay.remove();
-                    }
-                    if (_currentOverlay == overlay) {
-                      _currentOverlay = null;
-                      _currentController = null;
-                    }
-                  },
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(
-                        20.0,
-                        View.of(context).viewPadding.top / 5.0,
-                        20.0,
-                        0.0,
-                      ),
-                      padding: const EdgeInsets.fromLTRB(16, 10, 18, 10),
-                      decoration: BoxDecoration(
-                        color: bgColor,
-                        borderRadius: BorderRadius.circular(100.0),
-                        border: Border.all(
-                          color: Theme.of(context).dividerColor,
-                          width: 0.5,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).dividerColor,
-                            blurRadius: 10.0,
-                            offset: const Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: IntrinsicWidth(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min, // عرض به اندازه محتوا
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              icon,
-                              color: iconColor,
-                              size: 24.0,
-                            ),
-                            const SizedBox(width: 5.0),
-                            Flexible(
-                              child: Text(
-                                message,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                textScaler: TextScaler.noScaling,
-                                style: TextStyle(
-                                  fontFamily: 'Anaheim',
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF212121),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+    return Dismissible(
+      key: UniqueKey(),
+      direction: DismissDirection.horizontal,
+      onDismissed: (_) async {
+        _autoDismissTimer?.cancel();
+        await _controller?.reverse();
+        _dispose();
+      },
+      child: Material(
+        color: Colors.transparent,
+        child: SafeArea(
+          minimum: const EdgeInsets.only(
+            top: 18.0,
+            left: 20.0,
+            right: 20.0,
+          ),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(
+              10.0,
+              10.0,
+              16.0,
+              10.0,
+            ),
+            decoration: BoxDecoration(
+              color: bgColor,
+              borderRadius: BorderRadius.circular(100.0),
+              border: Border.all(
+                color: Theme.of(context).dividerColor,
+                width: 0.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).dividerColor,
+                  blurRadius: 5.0,
+                  offset: const Offset(0, 0),
+                ),
+              ],
+            ),
+            child: IntrinsicWidth(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    color: iconColor,
+                    size: 22,
+                  ),
+                  const SizedBox(width: 5.0),
+                  Flexible(
+                    child: Text(
+                      _message,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textScaler: TextScaler.noScaling,
+                      style: TextStyle(
+                        fontFamily: 'Anaheim',
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF212121),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
-
-    Navigator.of(context).overlay!.insert(overlay);
-    _currentOverlay = overlay;
-    _currentController = controller;
-    controller.forward();
-
-    // بعد از 3 ثانیه خودش با انیمیشن بسته بشه
-    Future.delayed(const Duration(seconds: 3), () async {
-      if (controller.status == AnimationStatus.forward ||
-          controller.status == AnimationStatus.completed) {
-        await controller.reverse();
-        if (overlay.mounted) {
-          overlay.remove();
-        }
-        if (_currentOverlay == overlay) {
-          _currentOverlay = null;
-          _currentController = null;
-        }
-      }
-    });
   }
 }
+
+// enum MessageType { success, error, info }
+
+// class SnackBarHelper {
+//   static OverlayEntry? _currentOverlay;
+//   static AnimationController? _currentController;
+
+//   static void show(
+//     BuildContext context,
+//     String message, {
+//     MessageType messageType = MessageType.success,
+//   }) async {
+//     // اگر Snackbar فعلی وجود داره، اول با انیمیشن ببندش
+//     if (_currentOverlay != null && _currentController != null) {
+//       await _currentController!.reverse();
+//       try {
+//         if (_currentOverlay!.mounted) {
+//           _currentOverlay!.remove();
+//         }
+//       } catch (_) {}
+//       _currentOverlay = null;
+//       _currentController = null;
+//     }
+
+//     IconData icon;
+//     Color iconColor;
+//     Color bgColor = Color(0xFFFFFFFF);
+
+//     switch (messageType) {
+//       case MessageType.success:
+//         icon = Icons.check_circle_rounded;
+//         iconColor = Color(0xFF01B001);
+//         bgColor = Color.alphaBlend(
+//           Color(0xFF01B001).withValues(alpha: 0.15),
+//           bgColor,
+//         );
+//         break;
+//       case MessageType.error:
+//         icon = Icons.cancel_rounded;
+//         iconColor = Color(0xFFF44336);
+//         bgColor = Color.alphaBlend(
+//           Color(0xFFF44336).withValues(alpha: 0.15),
+//           bgColor,
+//         );
+//         break;
+//       case MessageType.info:
+//         icon = Icons.error_rounded;
+//         iconColor = Color(0xFFEAB002);
+//         bgColor = Color.alphaBlend(
+//           Color(0xFFEAB002).withValues(alpha: 0.15),
+//           bgColor,
+//         );
+//         break;
+//     }
+
+//     final controller = AnimationController(
+//       vsync: Navigator.of(context),
+//       duration: const Duration(milliseconds: 800),
+//       reverseDuration: const Duration(milliseconds: 250),
+//     );
+
+//     final slideAnimation = Tween<Offset>(
+//       begin: const Offset(0, -0.7),
+//       end: Offset.zero,
+//     ).animate(
+//       CurvedAnimation(
+//         parent: controller,
+//         curve: Curves.elasticOut,
+//         reverseCurve: Curves.linearToEaseOut,
+//       ),
+//     );
+
+//     final fadeAnimation = Tween<double>(
+//       begin: 0.0,
+//       end: 1.0,
+//     ).animate(
+//       CurvedAnimation(
+//         parent: controller,
+//         curve: Curves.fastLinearToSlowEaseIn,
+//         reverseCurve: Curves.linearToEaseOut,
+//       ),
+//     );
+
+//     late OverlayEntry overlay; // ✅ اینجا late اضافه شد
+
+//     overlay = OverlayEntry(
+//       builder: (context) {
+//         return SafeArea(
+//           child: Align(
+//             alignment: Alignment.topCenter,
+//             child: SlideTransition(
+//               position: slideAnimation,
+//               child: FadeTransition(
+//                 opacity: fadeAnimation,
+//                 child: Dismissible(
+//                   key: UniqueKey(),
+//                   direction: DismissDirection.horizontal,
+//                   onDismissed: (_) async {
+//                     await controller.reverse();
+//                     if (overlay.mounted) {
+//                       overlay.remove();
+//                     }
+//                     if (_currentOverlay == overlay) {
+//                       _currentOverlay = null;
+//                       _currentController = null;
+//                     }
+//                   },
+//                   child: Material(
+//                     color: Colors.transparent,
+//                     child: Container(
+//                       margin: EdgeInsets.fromLTRB(
+//                         20.0,
+//                         View.of(context).viewPadding.top / 5.0,
+//                         20.0,
+//                         0.0,
+//                       ),
+//                       padding: const EdgeInsets.fromLTRB(16, 10, 18, 10),
+//                       decoration: BoxDecoration(
+//                         color: bgColor,
+//                         borderRadius: BorderRadius.circular(100.0),
+//                         border: Border.all(
+//                           color: Theme.of(context).dividerColor,
+//                           width: 0.5,
+//                         ),
+//                         boxShadow: [
+//                           BoxShadow(
+//                             color: Theme.of(context).dividerColor,
+//                             blurRadius: 10.0,
+//                             offset: const Offset(0, 0),
+//                           ),
+//                         ],
+//                       ),
+//                       child: IntrinsicWidth(
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           mainAxisSize: MainAxisSize.min, // عرض به اندازه محتوا
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           children: [
+//                             Icon(
+//                               icon,
+//                               color: iconColor,
+//                               size: 24.0,
+//                             ),
+//                             const SizedBox(width: 5.0),
+//                             Flexible(
+//                               child: Text(
+//                                 message,
+//                                 maxLines: 2,
+//                                 overflow: TextOverflow.ellipsis,
+//                                 textScaler: TextScaler.noScaling,
+//                                 style: TextStyle(
+//                                   fontFamily: 'Anaheim',
+//                                   fontSize: 15.0,
+//                                   fontWeight: FontWeight.bold,
+//                                   color: Color(0xFF212121),
+//                                 ),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+
+//     Navigator.of(context).overlay!.insert(overlay);
+//     _currentOverlay = overlay;
+//     _currentController = controller;
+//     controller.forward();
+
+//     // بعد از 3 ثانیه خودش با انیمیشن بسته بشه
+//     Future.delayed(const Duration(seconds: 3), () async {
+//       if (controller.status == AnimationStatus.forward ||
+//           controller.status == AnimationStatus.completed) {
+//         await controller.reverse();
+//         if (overlay.mounted) {
+//           overlay.remove();
+//         }
+//         if (_currentOverlay == overlay) {
+//           _currentOverlay = null;
+//           _currentController = null;
+//         }
+//       }
+//     });
+//   }
+//}

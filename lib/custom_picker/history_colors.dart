@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ios_color_picker/custom_picker/shared.dart';
-import 'package:super_tooltip/super_tooltip.dart';
 
 import 'color_observer.dart';
 import 'extensions.dart';
@@ -17,9 +16,7 @@ class HistoryColors extends StatefulWidget {
 class _HistoryColorsState extends State<HistoryColors> {
   int page = 0;
   int colorPage = 0;
-  int toolTip = 0;
   PageController pageController = PageController();
-  final _tipController = SuperTooltipController();
 
   List<Color> historyColors = [];
 
@@ -64,22 +61,13 @@ class _HistoryColorsState extends State<HistoryColors> {
         });
       }
     }
-    if (delete) {
-      _tipController.hideTooltip();
-    }
-    setState(() {});
-  }
 
-  Future<void> showTooltip() async {
-    _tipController.hideTooltip();
-    await Future.delayed(const Duration(milliseconds: 200));
-    _tipController.showTooltip();
+    setState(() {});
   }
 
   @override
   void dispose() {
     pageController.dispose();
-    _tipController.dispose();
     super.dispose();
   }
 
@@ -119,99 +107,98 @@ class _HistoryColorsState extends State<HistoryColors> {
           }
 
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: SuperTooltip(
-              backgroundColor: Colors.grey.shade200,
-              borderColor: Colors.transparent,
-              onHide: () {
-                toolTip = -1;
-              },
-              onLongPress: () {
-                setState(() {
-                  toolTip = index;
-                });
-                showTooltip();
-              },
-              showBarrier: false,
-              hasShadow: false,
-              sigmaY: 16,
-              sigmaX: 16,
-              arrowLength: 8,
-              arrowTipDistance: 17,
-              bubbleDimensions: EdgeInsets.zero,
-              popupDirection: TooltipDirection.up,
-              controller: toolTip == index ? _tipController : null,
-              content: InkWell(
-                splashColor: Colors.black12,
-                splashFactory: InkSparkle.splashFactory,
-                highlightColor: Colors.transparent,
-                borderRadius: BorderRadius.circular(20.0),
-                onTap: () {
-                  historyColors.removeAt(index);
-                  setHistory(delete: true);
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 12,
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: MenuAnchor(
+                style: MenuStyle(
+                  backgroundColor: WidgetStatePropertyAll(
+                    Colors.grey.shade200,
                   ),
-                  child: Text(
-                    "Delete",
-                    style: TextStyle(
-                      fontFamily: 'Anaheim',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.red,
+                  elevation: const WidgetStatePropertyAll(0),
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
+                  ),
+                  padding: const WidgetStatePropertyAll(
+                    EdgeInsets.zero,
                   ),
                 ),
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: historyColors[index],
-                    ),
-                  ),
-                  if (colorController.value.toHex() ==
-                      historyColors[index].toHex())
-                    Container(
-                      height: 36,
-                      width: 36,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2,
-                        ),
+                alignmentOffset: const Offset(-15, -80),
+                menuChildren: [
+                  InkWell(
+                    splashFactory: InkSparkle.splashFactory,
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () {
+                      historyColors.removeAt(index);
+                      setHistory(delete: true);
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
                       ),
-                    ),
-                  Positioned.fill(
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        splashColor: Colors.white24,
-                        splashFactory: InkSparkle.splashFactory,
-                        highlightColor: Colors.transparent,
-                        borderRadius: BorderRadius.circular(100.0),
-                        onTap: () {
-                          colorController.updateColor(historyColors[index]);
-                          widget.onColorChanged(colorController.value);
-                          _tipController.hideTooltip();
-                          toolTip = -1;
-                          setState(() {});
-                        },
+                      child: Text(
+                        "Delete",
+                        style: TextStyle(
+                          fontFamily: 'Anaheim',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-          );
+                builder: (context, controller, child) {
+                  return GestureDetector(
+                    onLongPress: () {
+                      controller.open();
+                    },
+                    child: child,
+                  );
+                },
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: historyColors[index],
+                      ),
+                    ),
+                    if (colorController.value.toHex() ==
+                        historyColors[index].toHex())
+                      Container(
+                        height: 36,
+                        width: 36,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                    Positioned.fill(
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(100),
+                          splashFactory: InkSparkle.splashFactory,
+                          splashColor: Colors.white24,
+                          onTap: () {
+                            colorController.updateColor(historyColors[index]);
+                            widget.onColorChanged(colorController.value);
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ));
         },
       ),
     );
