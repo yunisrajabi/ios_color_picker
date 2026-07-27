@@ -166,6 +166,12 @@ class _PickersSelectorTabViewState extends State<PickersSelectorTabView>
             unselectedLabelColor: isLight ? Colors.black : Colors.white,
             tabs: _tabs,
             splashFactory: InkSparkle.splashFactory,
+            splashBorderRadius: BorderRadius.circular(100),
+            overlayColor: WidgetStatePropertyAll(
+              Theme.of(context).brightness == Brightness.light
+                  ? Colors.black12
+                  : Colors.white10,
+            ),
           ),
         ),
         // content
